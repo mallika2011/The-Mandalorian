@@ -120,7 +120,7 @@ class Beam(Others):
 
 
 #CLASS FOR THE COINS 
-class coins (Others):
+class Coins (Others):
     def __init__(self,x,y):
         self.shape=np.zeros((2),dtype='<U2')
         Others.__init__(self,x,y)

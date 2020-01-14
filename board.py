@@ -1,6 +1,5 @@
 from headers import *
 
-
 class Board:
 
     #Creates the entire board for the game

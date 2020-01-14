@@ -7,17 +7,23 @@ class Din(Person):
 
     #personal attributes for din 
     def __init__(self, x_cood, y_cood):
+        # self.x_cood=x_cood
+        # self.y_cood=y_cood
         self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]])   #3x3 matrix
         self.__body_fly=np.array([[" "," ","O"," "," "],["{","|"," ","|","}"],[" ","/"," ", "\\"," "]])
         self.__lives=4
         self.collision_ok=[" ","$"]
         self.__coins=0
         self.dead=0
+        self.direction=0
 
         Person.__init__(self,x_cood,y_cood)
 
     def show_lives(self):
         return self.__lives
+
+    def dec_lives(self):
+        self.__lives-=1
     
     def show_coins(self):
         return self.__coins
@@ -29,17 +35,19 @@ class Din(Person):
                 grid[i][j]=self.__body[i-(HT-5)][j-10]
 
     #Clearing the position of din as he moves
-    def din_clear(self, grid, x,y):
+    def din_clear(self, grid):
+        x=self.x_cood
+        y=self.y_cood
         grid[y:y+3,x:x+3]=' '
 
     #New position of din as he moves
-    def din_show(self, grid, mode,x,y):
-        if mode == 0:
-            self.din_clear(grid, self.x_cood,self.y_cood)
-            self.x_cood=x
-            self.y_cood=y
-            for i in range(y,y+3):
-                for j in range(x, x+3):
-                    grid[i][j]=self.__body[i-y][j-x]
-        elif mode == 1:
-            o=1
+    def din_show(self, grid,x,y):
+        # if mode == 0:
+        self.din_clear(grid)
+        self.x_cood=x
+        self.y_cood=y
+        for i in range(y,y+3):
+            for j in range(x, x+3):
+                grid[i][j]=self.__body[i-y][j-x]
+        # elif mode == 1:
+            # o=1
