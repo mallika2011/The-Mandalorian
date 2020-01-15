@@ -13,8 +13,7 @@ factor = 0
 
 # The player
 obj_din = Din(STARTPOS, 35)
-obj_din.din_show(obj_board.grid, factor+1+STARTPOS, 35)
-
+obj_din.din_show(obj_board.grid, factor+1+STARTPOS, 35,0)
 
 # The background
 obj_back = Background()
@@ -24,25 +23,10 @@ obj_back.display_floor(obj_board.grid)
 # Placing obstacles
 
 obj_beam_array = [Beam(0, 0) for i in range(30)]
-
-valy = 10
-valx = random.randrange(25)
-for i in range(0, 30, 3):
-    obj_beam_array[i] = Beam(valx, valy)
-    valy += 100
+for i in range (0,30):
     valx = random.randrange(25)
-
-valy = 25
-for i in range(1, 30, 3):
-    obj_beam_array[i] = Beam(valx, valy)
-    valy += 50
-    valx = random.randrange(25)
-
-valy = 15
-for i in range(2, 30, 3):
-    obj_beam_array[i] = Beam(valx, valy)
-    valy += 300
-    valx = random.randrange(25)
+    valy=random.randrange(250)
+    obj_beam_array[i]=Beam(valx,valy)
 
 val = 10
 ang = 0
@@ -50,7 +34,6 @@ ang = 0
 for i in range(len(obj_beam_array)):
     print(str(obj_beam_array[i].x) + "  " +
           str(obj_beam_array[i].y) + " type "+str(val) + " angle "+str(ang))
-
     obj_beam_array[i].place_beam(val, ang, obj_board.grid)
     if(val == 30):
         val = 10
@@ -59,13 +42,13 @@ for i in range(len(obj_beam_array)):
     if ang == 90:
         ang = 0
     else:
-        ang += 90
+        ang += 45
     # TODO PLACE 45 DEGREE BEAMS
 
 # Placing coins
 for i in range(100):
-    valx = random.randrange(5, 30)
-    valy = random.randrange(0, 1999)
+    valx = random.randrange(5, HT-10)
+    valy = random.randrange(0, WIDTH-10)
     obj_coin = Coins(valx, valy)
     if(obj_board.grid[valx][valy] == ' ' and obj_board.grid[valx][valy+1] == ' ' and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
         obj_coin.place_coin(obj_board.grid)
@@ -90,7 +73,6 @@ def movedin():
             pass
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
         return ''
-
     char = user_input()
 
     if char == 'd':
@@ -102,7 +84,7 @@ def movedin():
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood += 1
             obj_din.direction = 1
-            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood)
+            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
             obj_din.dec_lives()
@@ -123,7 +105,7 @@ def movedin():
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood -= 1
             obj_din.direction = -1
-            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood)
+            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
             obj_din.dec_lives()
@@ -136,7 +118,7 @@ def movedin():
     	# os.system('afplay ./music/game_over.wav&')
     	quit()
 
-    # if char == 'w':
+    if char == 'w':
     # 	if(obj_board.matrix[obj_din.ycoo + 3][obj_din.xcoo] == "-"): #standing on surface
 
     # 		prev_ycoo=obj_din.ycoo
@@ -146,13 +128,25 @@ def movedin():
     # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo+1] == " " and
     # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo] == " "):
 
-    # 			obj_din.disappear_mario(obj_board)
-    # 			obj_din.ycoo -= 1
-
-    # 			obj_din.reappear_mario(obj_board)
+        obj_din.din_clear(obj_board.grid)
+        if obj_din.y_cood > 3 :
+            obj_din.y_cood -= 1
+        else: 
+            obj_din.y_cood=3
+        obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
     # 		os.system('afplay ./music/jump.wav&')
     # 		obj_config.check_brick_collision(obj_scenery, obj_board, obj_din)
+
+
+    if char == ' ':
+        if(obj_din.shield_flag==0):
+            obj_din.din_clear(obj_board.grid)
+            obj_din.x_cood-=1 
+            obj_din.y_cood-=4
+            obj_din.shield_flag=1
+            obj_din.shield_start_time=time.time()
+
 
     # if char == 's':
     # 	obj_board.matrix[obj_din.ycoo-5][obj_din.xcoo + 1] = 'B'
@@ -170,12 +164,13 @@ def movedin():
     # 			obj_bossenemy.boss_life -= 1
 
 
+
 # Start time of the game
 start_time = time.time()
-s = time.perf_counter()
+x=time.time()
+move=1
 
 os.system('clear')
-print(obj_din.x_cood,obj_din.y_cood)
 
 while True:
     newtime = GAMETIME - (round(time.time()) - round(start_time))
@@ -184,25 +179,50 @@ while True:
         os.system('clear')
         print("GAME OVER!")
         quit()
-    
-    # print(STARTPOS, factor, factor + obj_din.x_cood, obj_din.x_cood, obj_din.y_cood)
-    
+
     movedin()
-    print()
-    print()
-    if(time.perf_counter()-s >= 0.2):
-        if factor >= 1799:
-            factor = 1799
-        else:
-            factor += 1
-        
+    print(factor)
+
+    if factor >= 99:
+        factor = 99
+        move=0
+    else:
+        factor += 1
+
+    #GRAVITY EFFECT
+    if(time.time()-x >=0.4):
+        if(obj_din.y_cood  < 35 and obj_din.mode == 0):
+            obj_din.gravity(obj_board.grid)
+            x=time.time()
+        elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
+            obj_din.gravity(obj_board.grid)
+            x=time.time()
+
+    #SHIELD CHECKER
+    if(obj_din.shield_flag==1):
+        if(time.time()-obj_din.shield_start_time>=10):
+            #remove shield after 10s
+            obj_din.remove_shield(obj_board.grid)
+
+
+    #HEADER PRINTING 
     print(Fore.WHITE + Back.RED + Style.BRIGHT + "THE MANDALORIAN".center(SCREEN))
     print(Style.RESET_ALL)
-    stats = str("LIVES: "+str(obj_din.show_lives()) + "      SCORE:" + str(obj_din.show_coins())+"     TIME: " + str(newtime))
+    stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins())+"  |  TIME: " + str(newtime))
     print(Fore.WHITE + Back.BLUE + Style.BRIGHT + stats.center(SCREEN), end='')
     print(Style.RESET_ALL)
-    obj_board.print_board(factor)
-    obj_din.din_show(obj_board.grid,1+obj_din.x_cood, obj_din.y_cood)
 
-    print()
-    print()
+    #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
+    obj_board.print_board(factor)
+
+    #PRINTING DIN
+    if obj_din.shield_flag == 0 :
+        obj_din.mode = 0
+    elif obj_din.shield_flag ==1 :
+        obj_din.mode=1
+
+    obj_din.din_clear(obj_board.grid)
+
+    obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
+    
+

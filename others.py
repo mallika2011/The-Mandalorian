@@ -59,12 +59,9 @@ class Beam(Others):
                     temp2 = 0
                     for i in range(x, x+10):
                         for j in range(y, y+10):
-                            if(temp1 == temp2):
+                            if(i-x== j-y):
                                 grid[i][j] = self.shape10[temp]
                                 temp += 1
-                                continue
-                            temp2 += 1
-                        temp1 += 1
 
         # Placing the 20 length beam horizontally, vertically and at 45 degrees.
         if(type == 20):
@@ -85,12 +82,9 @@ class Beam(Others):
                     temp2 = 0
                     for i in range(x, x+20):
                         for j in range(y, y+20):
-                            if(temp1 == temp2):
+                            if(i-x==j-y):
                                 grid[i][j] = self.shape20[temp]
                                 temp += 1
-                                continue
-                            temp2 += 1
-                        temp1 += 1
 
         # Placing the 30 length beam horizontally, vertically and at 45 degrees.
         if(type == 30):
@@ -107,16 +101,11 @@ class Beam(Others):
                         grid[x][i] = self.shape30[temp]
                         temp += 1
                 elif(angle == 45):
-                    temp1 = 0
-                    temp2 = 0
                     for i in range(x, x+30):
                         for j in range(y, y+30):
-                            if(temp1 == temp2):
+                            if(i-x== j-y):
                                 grid[i][j] = self.shape30[temp]
                                 temp += 1
-                                continue
-                            temp2 += 1
-                        temp1 += 1
 
 
 #CLASS FOR THE COINS 

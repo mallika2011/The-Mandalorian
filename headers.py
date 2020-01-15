@@ -14,7 +14,7 @@ ENDC = '\033[m' # reset to the defaults
 TGREEN =  '\033[32m' # Green Text
 HT=40
 SCREEN=200
-WIDTH=2000
+WIDTH=300
 GAMETIME=100
 STARTPOS=25
 
