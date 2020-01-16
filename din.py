@@ -32,6 +32,9 @@ class Din(Person):
     
     def show_coins(self):
         return self.__coins
+
+    def inc_coins(self):
+        self.__coins+=1
     
     #Function to place din correctly in the beginning
     def start_pos(self,grid):
@@ -39,15 +42,27 @@ class Din(Person):
             for j in range(10, 13):
                 grid[i][j]=self.__body[i-(HT-5)][j-10]
 
+    def new_din(self,grid):
+        for i in range(5,8):
+            for j in range(10, 13):
+                grid[i][j]=self.__body[i][j-10]
+
     #Clearing the position of din as he moves
     def din_clear(self, grid):
         x=self.x_cood
         y=self.y_cood
 
-        if(self.mode==0):
-            grid[y:y+3,x:x+3]=' '
-        elif self.mode == 1 :
-            grid[y-2:y+5,x-2:x+7]=' '
+        flag=self.check_collision(grid)
+        if flag ==1 :
+            if(self.mode==0):
+                grid[y:y+3,x:x+3]=' '
+            elif self.mode == 1 :
+                grid[y-2:y+5,x-2:x+7]=' '
+        else :
+            self.dec_lives()
+            self.start_pos(grid)
+            self.dead=0
+
 
     #New position of din as he moves
     def din_show(self, grid,x,y, mode):
@@ -94,7 +109,20 @@ class Din(Person):
     def check_collision(self,grid):
         x=self.x_cood
         y=self.y_cood
-        for i in range (x,x+3):
-            for j in range (y, y+3):
-                if(grid[i][j]!=' '):
-                    return grid[i][j]
+        # print(x, y)
+        for i in range (y,y+3):
+            for j in range (x, x+3):
+                # print(grid[i][j])
+                if(grid[i][j]=='#' or grid[i][j]=='<'):
+                    if(grid[i][j]=='#'):
+                        grid[i][j]=='#'
+                    if(grid[i][j]=='<'):
+                        grid[i][j]=='>'
+                    return 2 #not possible
+                    #TODO dead sound
+                elif(grid[i][j]=='$'):
+                    self.inc_coins()
+                    
+        return 1
+                    
+                    

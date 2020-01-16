@@ -21,25 +21,61 @@ class Beam(Others):
     def create_beam(self, type):
         if(type == 10):
             self.shape10.fill('#')
-            self.shape10[0] = '/'
-            self.shape10[self.shape10.size-1] = '/'
+            self.shape10[0] = '<'
+            self.shape10[self.shape10.size-1] = '>'
         elif(type == 20):
             self.shape20.fill('#')
-            self.shape20[0] = '/'
-            self.shape20[self.shape20.size-1] = '/'
+            self.shape20[0] = '<'
+            self.shape20[self.shape20.size-1] = '>'
         elif(type == 30):
             self.shape30.fill('#')
-            self.shape30[0] = '/'
-            self.shape30[self.shape30.size-1] = '/'
+            self.shape30[0] = '<'
+            self.shape30[self.shape30.size-1] = '>'
 
+       
+    def check_beam(self, x,y, task, grid, type):
+
+        #While placing beams
+        if(task==1):
+            for i in range (y,y+type):
+                print(grid[x][i])
+                if(grid[x][i]!=' '):
+                    return 1
+            for i in range (x, x+type):
+                print(grid[i][y])
+                if(grid[i][y]!= ' '):
+                    return 1
+            
+            for i in range (x, x+type):
+                for j in range (y, y+type):
+                    if(i-x==j-y):
+                        print(grid[i][j])
+                        if(grid[i][j]!=' '):
+                            return 1
+
+            return 0
+
+        #while shooting bullets
+        elif(task==2):
+            o=1
+    
     def place_beam(self, type, angle, grid):
 
         x = self.x
         y = self.y
 
+       
+
         print("placing" + str(x) + " " + str(y) +
-              " angle " + str(angle) + " typt "+str(type))
+              " angle " + str(angle) + " type "+str(type))
         self.create_beam(type)
+
+        #AVOID CROSSING BEAMS
+        if x + type > HT-3 or x < 4 or y+type > WIDTH:
+            o = 1
+        elif (self.check_beam(x,y,1,grid, type)):
+            return
+
         # Placing the 10 length beam horizontally, vertically and at 45 degrees.
         if(type == 10):
             temp = 0

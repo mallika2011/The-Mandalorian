@@ -32,7 +32,7 @@ val = 10
 ang = 0
 
 for i in range(len(obj_beam_array)):
-    print(str(obj_beam_array[i].x) + "  " +
+    print(str(i) + str(obj_beam_array[i].x) + "  " +
           str(obj_beam_array[i].y) + " type "+str(val) + " angle "+str(ang))
     obj_beam_array[i].place_beam(val, ang, obj_board.grid)
     if(val == 30):
@@ -43,7 +43,6 @@ for i in range(len(obj_beam_array)):
         ang = 0
     else:
         ang += 45
-    # TODO PLACE 45 DEGREE BEAMS
 
 # Placing coins
 for i in range(100):
@@ -78,7 +77,7 @@ def movedin():
     if char == 'd':
         # obj_config.coins_right(obj_board.matrix, obj_din)
         # ispos = obj_din.check_not_collision_right(obj_board.grid)
-        ispos = 1
+        ispos = obj_din.check_collision(obj_board.grid)
 
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
@@ -89,7 +88,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            obj_din.start_pos(obj_board.grid)
+            # obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
         else:
@@ -99,7 +98,7 @@ def movedin():
     if char == 'a':
         # obj_config.coins_right(obj_board.matrix, obj_din)
         # ispos = obj_din.check_not_collision_right(obj_board.grid)
-        ispos = 1
+        ispos = obj_din.check_collision(obj_board.grid)
 
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
@@ -110,7 +109,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            obj_din.start_pos(obj_board.grid)
+            # obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
     if char == 'q':
@@ -127,14 +126,20 @@ def movedin():
     # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo+2] == " " and
     # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo+1] == " " and
     # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo] == " "):
-
-        obj_din.din_clear(obj_board.grid)
-        if obj_din.y_cood > 3 :
-            obj_din.y_cood -= 1
-        else: 
-            obj_din.y_cood=3
-        obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
-
+        ispos = obj_din.check_collision(obj_board.grid)
+        
+        if ispos==1:
+            obj_din.din_clear(obj_board.grid)
+            if obj_din.y_cood > 3 :
+                obj_din.y_cood -= 1
+            else: 
+                obj_din.y_cood=3
+            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
+        elif ispos==2:
+            obj_din.dec_lives()
+            # os.system('afplay ./music/mario_dies.wav&')
+            # obj_din.new_din(obj_board.grid)
+            obj_din.dead = 0
     # 		os.system('afplay ./music/jump.wav&')
     # 		obj_config.check_brick_collision(obj_scenery, obj_board, obj_din)
 
@@ -167,30 +172,37 @@ def movedin():
 
 # Start time of the game
 start_time = time.time()
+screen_time=time.time()
 x=time.time()
 move=1
 
 os.system('clear')
 
 while True:
+    # p=2
     newtime = GAMETIME - (round(time.time()) - round(start_time))
     reposition_cursor(0, 0)
-    if(newtime == 0 or obj_din.show_lives() == 0):
+    if(newtime == 0 or obj_din.show_lives() <= 0):
+        time.sleep(2)
         os.system('clear')
-        print("GAME OVER!")
+        game_over()
+
+        print()
+        print("Better luck next time!")
+        print("YOUR SCORE IS : ", obj_din.show_coins())
         quit()
 
     movedin()
-    print(factor)
+    print(obj_din.x_cood,obj_din.y_cood, factor)
 
-    if factor >= 99:
-        factor = 99
-        move=0
-    else:
-        factor += 1
+    #BOUNDARY CONDITIONS FOR DIN:
+    if(obj_din.x_cood < factor+1):
+        obj_din.x_cood=factor+1
+    if(obj_din.y_cood >= factor+SCREEN-2):
+        obj_din.x_cood=factor+SCREEN-2
 
     #GRAVITY EFFECT
-    if(time.time()-x >=0.4):
+    if(time.time()-x >=0.3789):
         if(obj_din.y_cood  < 35 and obj_din.mode == 0):
             obj_din.gravity(obj_board.grid)
             x=time.time()
@@ -205,12 +217,13 @@ while True:
             obj_din.remove_shield(obj_board.grid)
 
 
-    #HEADER PRINTING 
-    print(Fore.WHITE + Back.RED + Style.BRIGHT + "THE MANDALORIAN".center(SCREEN))
-    print(Style.RESET_ALL)
+    #PRINTING HEADERS
+    print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
+    print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "THE MANDALORIAN".center(SCREEN)+Style.RESET_ALL)
+    print(Fore.WHITE + Back.LIGHTBLUE_EX+ Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
     stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins())+"  |  TIME: " + str(newtime))
-    print(Fore.WHITE + Back.BLUE + Style.BRIGHT + stats.center(SCREEN), end='')
-    print(Style.RESET_ALL)
+    print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + stats.center(SCREEN))
+    print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
 
     #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
     obj_board.print_board(factor)
@@ -221,8 +234,15 @@ while True:
     elif obj_din.shield_flag ==1 :
         obj_din.mode=1
 
-    obj_din.din_clear(obj_board.grid)
 
-    obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
+    #MOVING THE BOARD AND MANDO
+    if(time.time()-screen_time>=0.4):
+        if factor >= WIDTH-SCREEN-1:
+            factor = WIDTH-SCREEN-1
+            move=0
+        else:
+            factor += 1
+        screen_time=time.time()
+        obj_din.din_clear(obj_board.grid)
+        obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
     
-
