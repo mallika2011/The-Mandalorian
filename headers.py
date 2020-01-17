@@ -21,7 +21,6 @@ STARTPOS=25
 GRAVITYVAL=5
 BEAM_SIZE=20
 drop_start_time=-1
-myflag=0
 
 def line():
     for i in range(SCREEN):

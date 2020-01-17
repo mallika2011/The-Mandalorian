@@ -12,14 +12,18 @@ start_time = time.time()
 screen_time=time.time()
 x=time.time()
 move=1
+flag=0
 
+print(flag)
+
+beams_on_board(flag)
+flag=1
+coins_on_board()
 os.system('clear')
-beams_on_board()
-myflag=1
 
 
 while True:
-    
+    print(flag)
     newtime = GAMETIME - (round(time.time()) - round(start_time))
     reposition_cursor(0, 0)
     if(newtime == 0 or obj_din.show_lives() <= 0):
@@ -42,9 +46,7 @@ while True:
         obj_din.x_cood=factor+SCREEN-5
 
     #GRAVITY EFFECT
-    # if(time.time()-x >=0.15):
-    print(obj_din.show_drop_air_time())
-    if(obj_din.show_drop_air_time()!=0):
+    if(time.time()-x >=0.3):
         if(obj_din.y_cood  < 35 and obj_din.mode == 0):
             if(drop_start_time==-1):
                 drop_start_time=time.time()
@@ -76,9 +78,9 @@ while True:
     print_header(newtime)
 
     #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
-    beams_on_board()
-    obj_board.print_board(factor)
-    movedin()
+    # beams_on_board()
+    # obj_board.print_board(factor)
+    # movedin()
     
 
     #PRINTING DIN
@@ -99,7 +101,7 @@ while True:
         obj_din.din_clear(obj_board.grid)
         obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
-    # beams_on_board()
-    # obj_board.print_board(factor)
-    # movedin()
+    beams_on_board(flag)
+    obj_board.print_board(factor)
+    movedin()
     

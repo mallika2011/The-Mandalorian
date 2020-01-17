@@ -39,24 +39,28 @@ for i in range (0,30):
     valy=random.randrange(250)
     obj_beam_array[i]=Beam(valx,valy)
 
-def beams_on_board():
+def beams_on_board(flag):
+    print(obj_board.flag)
     ang = 0
     for i in range(len(obj_beam_array)):
-        obj_beam_array[i].place_beam(ang, obj_board.grid)
+        obj_beam_array[i].place_beam(ang, obj_board.grid, flag)
         if ang == 90:
             ang = 0
         else:
             ang += 45
+    if(flag==0):
+        flag=1
 
 
 
 # Placing coins
-for i in range(100):
-    valx = random.randrange(5, HT-10)
-    valy = random.randrange(0, WIDTH-10)
-    obj_coin = Coins(valx, valy)
-    if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
-        obj_coin.place_coin(obj_board.grid)
+def coins_on_board():
+    for i in range(100):
+        valx = random.randrange(5, HT-10)
+        valy = random.randrange(0, WIDTH-10)
+        obj_coin = Coins(valx, valy)
+        if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
+            obj_coin.place_coin(obj_board.grid)
 
 #Bullets array 
 obj_bullets_array=[]

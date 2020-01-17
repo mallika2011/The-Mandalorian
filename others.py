@@ -48,17 +48,16 @@ class Beam(Others):
         elif(task==2):
             o=1
     
-    def place_beam(self,angle, grid):
+    def place_beam(self,angle, grid,f):
 
         x = self.x
         y = self.y
      
         self.create_beam()
-
         #AVOID CROSSING BEAMS
-        if (x + BEAM_SIZE > HT-3 and angle==0) or (x < 4 or y> WIDTH-30) or (y+BEAM_SIZE > WIDTH-30 and angle==90) or(y+BEAM_SIZE > WIDTH or x + BEAM_SIZE > HT-3 and angle == 45):
+        if (x + BEAM_SIZE > HT-3 or x < 4 or y> WIDTH-30 or y+BEAM_SIZE > WIDTH-10):
             o = 1
-        elif (self.check_beam(x,y,1,grid) and myflag==0):
+        elif (self.check_beam(x,y,1,grid) and f==0):
             return
         else:
             temp = 0

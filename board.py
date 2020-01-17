@@ -9,6 +9,7 @@ class Board:
         self.rows=rows
         self.cols=cols
         self.grid=[]
+        self.flag=0
 
     #function to create the playing board
     def create_board(self):
