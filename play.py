@@ -88,7 +88,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            obj_din.new_din(obj_board.grid)
+            # obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
         else:
@@ -107,7 +107,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            obj_din.new_din(obj_board.grid)
+            # obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
     if char == 'q':
@@ -195,18 +195,19 @@ while True:
         obj_din.x_cood=factor+SCREEN-5
 
     #GRAVITY EFFECT
-    if(obj_din.y_cood  < 35 and obj_din.mode == 0):
-        if(drop_start_time==-1):
-            drop_start_time=time.time()
-        obj_din.gravity(obj_board.grid)
-        x=time.time()
-    elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
-        if(drop_start_time==-1):
-            drop_start_time=time.time()
-        obj_din.gravity(obj_board.grid)
-        x=time.time()
-    else :
-        drop_start_time=-1
+    if(time.time()-x >=0.15):
+        if(obj_din.y_cood  < 35 and obj_din.mode == 0):
+            if(drop_start_time==-1):
+                drop_start_time=time.time()
+            obj_din.gravity(obj_board.grid)
+            x=time.time()
+        elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
+            if(drop_start_time==-1):
+                drop_start_time=time.time()
+            obj_din.gravity(obj_board.grid)
+            x=time.time()
+        else :
+            drop_start_time=-1
 
     #SHIELD CHECKER
     if(obj_din.shield_flag==1):

@@ -21,11 +21,18 @@ class Din(Person):
         self.fly_flag=0
         self.mode=0
         self.shield_start_time=0
+        self.__drop_air_time=0
 
         Person.__init__(self,x_cood,y_cood)
 
     def show_lives(self):
         return self.__lives
+    
+    def set_drop_air_time(self,x):
+        self.__drop_air_time=x
+    
+    def show_drop_air_time(self):
+        return self.__drop_air_time
 
     def dec_lives(self):
         self.__lives-=1

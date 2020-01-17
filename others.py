@@ -148,7 +148,7 @@ class Beam(Others):
 #CLASS FOR THE COINS 
 class Coins (Others):
     def __init__(self,x,y):
-        self.shape=np.zeros((2),dtype='<U20')
+        self.shape=np.zeros((2),dtype='<U100')
         Others.__init__(self,x,y)
     
     def place_coin(self, grid):
