@@ -12,7 +12,7 @@ class Din(Person):
         self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]])   #3x3 matrix
         self.__body_fly=np.array([[" "," ","O"," "," "],["{","|"," ","|","}"],[" ","/"," ", "\\"," "]])
         self.__body_shield=np.array([["-","-","-","-","-","-","-"],["|"," "," ","O"," "," ","|"],["|"," ","{","|","}"," ","|"],["|"," ","/"," ","\\"," ","|"],["-","-","-","-","-","-","-"]])
-        self.__lives=4
+        self.__lives=100000
         self.collision_ok=[" ","$"]
         self.__coins=0
         self.dead=0
@@ -43,6 +43,7 @@ class Din(Person):
                 grid[i][j]=self.__body[i-(HT-5)][j-10]
 
     def new_din(self,grid):
+        print(self.x_cood, self.y_cood)
         for i in range(5,8):
             for j in range(10, 13):
                 grid[i][j]=self.__body[i][j-10]
@@ -85,17 +86,21 @@ class Din(Person):
 
     def gravity(self,grid):
         self.din_clear(grid)
-
+        # inc=3
+        inc = (round(0.5*GRAVITYVAL*(drop_start_time**2)))
         if(self.mode ==0 ):
-            if(self.y_cood+3<=35):
-                self.y_cood+=2
+            if(self.y_cood+inc<=35):
+                for  i in range (inc):
+                    self.y_cood+=1
             else:
                 self.y_cood=35
         elif(self.mode==1):
-            if(self.y_cood+5<=33):
-                self.y_cood+=2
+            if(self.y_cood+inc<=33):
+                for i in range(inc):
+                    self.y_cood+=1
             else:
                 self.y_cood=33
+        self.din_show(grid, self.x_cood, self.y_cood, self.mode)
 
     def remove_shield(self, grid):
         x=self.x_cood

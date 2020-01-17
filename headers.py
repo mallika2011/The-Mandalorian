@@ -12,12 +12,15 @@ from getch import _getChUnix as getChar
 #colours
 ENDC = '\033[m' # reset to the defaults
 TGREEN =  '\033[32m' # Green Text
+YELLOW=Fore.YELLOW
+RESET=Fore.RESET
 HT=40
 SCREEN=200
 WIDTH=500
 GAMETIME=100
 STARTPOS=25
-
+GRAVITYVAL=5
+drop_start_time=-1
 def line():
     for i in range(SCREEN):
         print('-', end='')

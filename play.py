@@ -52,6 +52,9 @@ for i in range(100):
     if(obj_board.grid[valx][valy] == ' ' and obj_board.grid[valx][valy+1] == ' ' and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
         obj_coin.place_coin(obj_board.grid)
 
+#Bullets array 
+obj_bullets_array=[]
+
 
 def movedin():
     # moves the player
@@ -73,12 +76,9 @@ def movedin():
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
         return ''
     char = user_input()
-
+    print(char)
     if char == 'd':
-        # obj_config.coins_right(obj_board.matrix, obj_din)
-        # ispos = obj_din.check_not_collision_right(obj_board.grid)
         ispos = obj_din.check_collision(obj_board.grid)
-
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood += 1
@@ -88,7 +88,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            # obj_din.new_din(obj_board.grid)
+            obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
         else:
@@ -96,8 +96,6 @@ def movedin():
             # os.system('afplay ./music/bump.wav&')
 
     if char == 'a':
-        # obj_config.coins_right(obj_board.matrix, obj_din)
-        # ispos = obj_din.check_not_collision_right(obj_board.grid)
         ispos = obj_din.check_collision(obj_board.grid)
 
         if ispos == 1:
@@ -109,7 +107,7 @@ def movedin():
         elif ispos == 2:
             obj_din.dec_lives()
             # os.system('afplay ./music/mario_dies.wav&')
-            # obj_din.new_din(obj_board.grid)
+            obj_din.new_din(obj_board.grid)
             obj_din.dead = 0
 
     if char == 'q':
@@ -118,14 +116,6 @@ def movedin():
     	quit()
 
     if char == 'w':
-    # 	if(obj_board.matrix[obj_din.ycoo + 3][obj_din.xcoo] == "-"): #standing on surface
-
-    # 		prev_ycoo=obj_din.ycoo
-
-    # 		while(obj_din.ycoo != prev_ycoo-8 and # 8 units; checking if there's anything above
-    # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo+2] == " " and
-    # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo+1] == " " and
-    # 			obj_board.matrix[obj_din.ycoo-1][obj_din.xcoo] == " "):
         ispos = obj_din.check_collision(obj_board.grid)
         
         if ispos==1:
@@ -153,20 +143,23 @@ def movedin():
             obj_din.shield_start_time=time.time()
 
 
-    # if char == 's':
-    # 	obj_board.matrix[obj_din.ycoo-5][obj_din.xcoo + 1] = 'B'
-    # 	os.system('afplay ./music/bullet.wav&')
+    if char == 'l':
+        print(obj_din.x_cood, obj_din.y_cood)
+        new_bullet=Bullet(obj_din.y_cood+1, obj_din.x_cood+5)
+        new_bullet.place_bullet(obj_board.grid)
+        obj_bullets_array.append(new_bullet)
+    	# os.system('afplay ./music/bullet.wav&')
 
-    # 	bosskill = obj_bossenemy.check_boss_kill(obj_board, obj_din)
-    # 	# if(bosskill is False):
-    # 	# 	obj_board.matrix[obj_din.ycoo-5][obj_din.xcoo] = " "
-    # 	# else:
-    # 	if bosskill is True:
-    # 		if(obj_bossenemy.boss_life == 1):
-    # 			obj_bossenemy.boss_kill = True
-    # 			obj_scenery.remove_barrier(obj_board.matrix)
-    # 		else:
-    # 			obj_bossenemy.boss_life -= 1
+    	# bosskill = obj_bossenemy.check_boss_kill(obj_board, obj_din)
+    	# if(bosskill is False):
+    	# 	obj_board.matrix[obj_din.ycoo-5][obj_din.xcoo] = " "
+    	# else:
+    	# if bosskill is True:
+    		# if(obj_bossenemy.boss_life == 1):
+    			# obj_bossenemy.boss_kill = True
+    			# obj_scenery.remove_barrier(obj_board.matrix)
+    		# else:
+    			# obj_bossenemy.boss_life -= 1
 
 
 
@@ -193,22 +186,27 @@ while True:
         quit()
 
     movedin()
-    print(obj_din.x_cood,obj_din.y_cood, factor)
+    print(obj_din.x_cood,obj_din.y_cood, factor, SCREEN, factor+SCREEN)
 
     #BOUNDARY CONDITIONS FOR DIN:
     if(obj_din.x_cood < factor+1):
         obj_din.x_cood=factor+1
-    if(obj_din.y_cood >= factor+SCREEN-2):
-        obj_din.x_cood=factor+SCREEN-2
+    if(obj_din.x_cood >= factor+SCREEN-5):
+        obj_din.x_cood=factor+SCREEN-5
 
     #GRAVITY EFFECT
-    if(time.time()-x >=0.3789):
-        if(obj_din.y_cood  < 35 and obj_din.mode == 0):
-            obj_din.gravity(obj_board.grid)
-            x=time.time()
-        elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
-            obj_din.gravity(obj_board.grid)
-            x=time.time()
+    if(obj_din.y_cood  < 35 and obj_din.mode == 0):
+        if(drop_start_time==-1):
+            drop_start_time=time.time()
+        obj_din.gravity(obj_board.grid)
+        x=time.time()
+    elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
+        if(drop_start_time==-1):
+            drop_start_time=time.time()
+        obj_din.gravity(obj_board.grid)
+        x=time.time()
+    else :
+        drop_start_time=-1
 
     #SHIELD CHECKER
     if(obj_din.shield_flag==1):
@@ -216,6 +214,14 @@ while True:
             #remove shield after 10s
             obj_din.remove_shield(obj_board.grid)
 
+    #MOVING EXISTING BULLETS:
+    for i in range (len(obj_bullets_array)):
+        
+        # if(obj_bullets_array[i].check_collision()==1):
+        #     o=1
+        # else:
+        obj_bullets_array[i].shoot(obj_board.grid)
+        
 
     #PRINTING HEADERS
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)

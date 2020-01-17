@@ -6,6 +6,7 @@ class Others:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.shape=np.zeros((100), dtype='<U1000')  #Polymorphism
 
 
 #CLASS FOR THE BEAMS
@@ -147,10 +148,36 @@ class Beam(Others):
 #CLASS FOR THE COINS 
 class Coins (Others):
     def __init__(self,x,y):
-        self.shape=np.zeros((2),dtype='<U2')
+        self.shape=np.zeros((2),dtype='<U20')
         Others.__init__(self,x,y)
     
     def place_coin(self, grid):
         self.shape.fill('$')
         grid[self.x][self.y]='$'
         grid[self.x][self.y+1]='$'
+
+class Bullet(Others):
+    def __init__(self,x,y):
+        self.shape=np.zeros((3),dtype='<U100')
+        Others.__init__(self,x,y)
+
+    def clear_bullet(self, grid):
+        x=self.x
+        grid[x]=' '
+        grid[x+1]=' '
+        grid[x+2]=' '
+    def place_bullet(self, grid):
+        self.shape[0]='('
+        self.shape[1]='0'
+        self.shape[2]=')'
+
+        for i in range(3):
+            grid[self.x][self.y+i]=self.shape[i]
+        
+    def shoot(self, grid):
+        grid[self.x][self.y]=' '
+        self.y+=1
+        self.place_bullet(grid)
+
+    # def check_collision(self, grid):
+        
