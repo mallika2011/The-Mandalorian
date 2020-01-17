@@ -9,10 +9,10 @@ class Din(Person):
     def __init__(self, x_cood, y_cood):
         # self.x_cood=x_cood
         # self.y_cood=y_cood
-        self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]])   #3x3 matrix
+        self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]],)   #3x3 matrix
         self.__body_fly=np.array([[" "," ","O"," "," "],["{","|"," ","|","}"],[" ","/"," ", "\\"," "]])
         self.__body_shield=np.array([["-","-","-","-","-","-","-"],["|"," "," ","O"," "," ","|"],["|"," ","{","|","}"," ","|"],["|"," ","/"," ","\\"," ","|"],["-","-","-","-","-","-","-"]])
-        self.__lives=100000
+        self.__lives=10000
         self.collision_ok=[" ","$"]
         self.__coins=0
         self.dead=0
@@ -56,22 +56,21 @@ class Din(Person):
                 grid[i][j]=self.__body[i][j-10]
 
     #Clearing the position of din as he moves
-    def din_clear(self, grid):
+    def din_clear(self, grid):  #CAERFUL
         x=self.x_cood
         y=self.y_cood
-
         flag=self.check_collision(grid)
-        if flag ==1 :
-            if(self.mode==0):
-                grid[y:y+3,x:x+3]=' '
-            elif self.mode == 1 :
-                grid[y-2:y+5,x-2:x+7]=' '
-        else :
+        if(self.mode==0):
+            for i in range(y, y+3):
+                for j in range(x,x+3):
+                    grid[i][j]=' '
+        elif self.mode == 1 :
+            for i in range(y-2, y+5):
+                for j in range(x-2,x+7):
+                    grid[i][j]=' '
+        if flag==2:
             self.dec_lives()
-            self.start_pos(grid)
-            self.dead=0
-
-
+            
     #New position of din as he moves
     def din_show(self, grid,x,y, mode):
         if mode == 0:
@@ -124,12 +123,7 @@ class Din(Person):
         # print(x, y)
         for i in range (y,y+3):
             for j in range (x, x+3):
-                # print(grid[i][j])
-                if(grid[i][j]=='#' or grid[i][j]=='<'):
-                    if(grid[i][j]=='#'):
-                        grid[i][j]=='#'
-                    if(grid[i][j]=='<'):
-                        grid[i][j]=='>'
+                if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3):
                     return 2 #not possible
                     #TODO dead sound
                 elif(grid[i][j]=='$'):

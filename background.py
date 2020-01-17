@@ -15,7 +15,7 @@ class Background:
     #function to create the floor
     def display_floor(self,boundary):
         for i in range(WIDTH):
-            boundary[HT-1][i]=self.__floor
+            boundary[HT-1][i]= self.__floor
             boundary[HT-2][i]=self.__middle
 
     #function to create the ceil

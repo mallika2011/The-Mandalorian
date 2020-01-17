@@ -17,14 +17,14 @@ class Board:
             for j in range(self.cols):
                 self.temp.append(" ")
             self.grid.append(self.temp)
-        self.grid=np.array(self.grid)
+        # self.grid=np.array(self.grid)
         
 
     #function to print the playing board
     def print_board(self, factor):
             for i in range(self.rows):
                 for j in range (factor, SCREEN+factor):
-                    print(self.grid[i][j], end='')
+                    print(Fore.WHITE + Back.LIGHTBLACK_EX + Style.BRIGHT+self.grid[i][j], end='')
                 print()
 
         

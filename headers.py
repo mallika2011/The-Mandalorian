@@ -3,8 +3,8 @@ import numpy as np
 import signal
 import os
 import sys
-import time
 from colorama import init, Fore, Back, Style
+# init()
 import random
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
@@ -12,15 +12,17 @@ from getch import _getChUnix as getChar
 #colours
 ENDC = '\033[m' # reset to the defaults
 TGREEN =  '\033[32m' # Green Text
-YELLOW=Fore.YELLOW
-RESET=Fore.RESET
+
 HT=40
 SCREEN=200
 WIDTH=500
 GAMETIME=100
 STARTPOS=25
 GRAVITYVAL=5
+BEAM_SIZE=20
 drop_start_time=-1
+myflag=0
+
 def line():
     for i in range(SCREEN):
         print('-', end='')
@@ -28,6 +30,15 @@ def line():
 
 def reposition_cursor(x,y):
     print("\033[%d;%dH" % (x, y))
+
+#OBJECTS:
+
+
+BEAM1=Fore.LIGHTYELLOW_EX+"#"+Fore.RESET
+BEAM2=Fore.LIGHTYELLOW_EX+"<"+Fore.RESET
+BEAM3=Fore.LIGHTYELLOW_EX+">"+Fore.RESET
+
+
 
 def view_colours():
     print(Fore.WHITE + Back.LIGHTWHITE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
@@ -44,6 +55,20 @@ def view_colours():
     
 
 def game_over():
+
+    a=[0]*3
+    for i in range(3):
+        a[i]=Fore.RED+"#"+Fore.RESET
+
+    b=[0]*4
+
+    for i in range(3):
+        b[i]=a[i]
+
+    for i in range(4):
+        print(b[i])
+
+    view_colours()
 
     print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ")                 
     print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "  _____                         ____                 ")                 
