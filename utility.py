@@ -33,14 +33,14 @@ def print_header(newtime):
 # Placing obstacles
 
 obj_beam_array = [Beam(0, 0) for i in range(30)]
-valy=10
+valy=5
 for i in range (0,30):
-    if(valy > WIDTH - 50):
+    if(valy > WIDTH - 100):
         break
     valx = random.randrange(35)
     obj_beam_array[i]=Beam(valx,valy)
     #Placing beams which are horizontally at least 50 units apart
-    valy= (valy+70) 
+    valy= (valy+50) 
     
 def beams_on_board():
     ang = 0
@@ -61,7 +61,7 @@ def beams_on_board():
 def coins_on_board():
     for i in range(100):
         valx = random.randrange(5, HT-10)
-        valy = random.randrange(0, WIDTH-10)
+        valy = random.randrange(0, WIDTH-100)
         obj_coin = Coins(valx, valy)
         if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+1] == ' '):
             obj_coin.place_coin(obj_board.grid)
@@ -70,7 +70,7 @@ def coins_on_board():
 def power_on_board():
     for i in range(5):
         valx = random.randrange(5, HT-10)
-        valy = random.randrange(0, WIDTH-10)
+        valy = random.randrange(0, WIDTH-100)
         obj_power=Powerup(valx,valy)
         obj_power.place_power(obj_board.grid)
 
@@ -163,7 +163,7 @@ def movedin():
 
 
     elif char == ' ':
-        if(obj_din.shield_flag==0):
+        if(obj_din.shield_flag==0 and obj_din.show_fly_flag()==0):  #Activate shield only when on ground
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood-=1 
             obj_din.y_cood-=4
@@ -173,7 +173,6 @@ def movedin():
 
 
     elif char == 'l':
-        # print(obj_din.x_cood, obj_din.y_cood)
         obj_din.set_fly_flag(0)
         new_bullet=Bullet(obj_din.y_cood+1, obj_din.x_cood+5)
         new_bullet.place_bullet(obj_board.grid)

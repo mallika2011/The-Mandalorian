@@ -4,7 +4,7 @@ import signal
 import os
 import sys
 from colorama import init, Fore, Back, Style
-# init()
+init()
 import random
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
@@ -12,7 +12,7 @@ from getch import _getChUnix as getChar
 
 HT=40
 SCREEN=200
-WIDTH=275
+WIDTH=400
 GAMETIME=100
 STARTPOS=25
 GRAVITYVAL=1
@@ -52,20 +52,6 @@ def view_colours():
     
 
 def game_over():
-
-    a=[0]*3
-    for i in range(3):
-        a[i]=Fore.RED+"#"+Fore.RESET
-
-    b=[0]*4
-
-    for i in range(3):
-        b[i]=a[i]
-
-    for i in range(4):
-        print(b[i])
-
-    view_colours()
 
     print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ")                 
     print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "  _____                         ____                 ")                 

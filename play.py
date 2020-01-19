@@ -1,10 +1,4 @@
 from headers import *
-
-# importing classes
-# from board import Board
-# from din import Din
-# from background import Background
-# from objects import *
 from utility import * 
 
 # Start time of the game
