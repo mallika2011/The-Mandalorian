@@ -145,10 +145,16 @@ def movedin():
         obj_din.set_drop_air_time(0)
         ispos = obj_din.check_collision(obj_board.grid)
         obj_din.din_clear(obj_board.grid)
-        if obj_din.y_cood > 3 :
-            obj_din.y_cood -= 1
-        else: 
-            obj_din.y_cood=3
+        if(obj_din.mode==0):
+            if obj_din.y_cood > 3 :
+                obj_din.y_cood -= 1
+            else: 
+                obj_din.y_cood=3
+        if(obj_din.mode==1):
+            if obj_din.y_cood > 5 :
+                obj_din.y_cood -= 1
+            else: 
+                obj_din.y_cood=5
         obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
         if ispos==2:
             obj_din.new_din(obj_board.grid)
@@ -162,6 +168,7 @@ def movedin():
             obj_din.x_cood-=1 
             obj_din.y_cood-=4
             obj_din.shield_flag=1
+            obj_din.mode=1
             obj_din.shield_start_time=time.time()
 
 
