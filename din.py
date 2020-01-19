@@ -60,9 +60,9 @@ class Din(Person):
                 grid[i][j]=self.__body[i-(HT-5)][j-10]
 
     def new_din(self,grid):
-        for i in range(5,8):
-            for j in range(10, 13):
-                grid[i][j]=self.__body[i][j-10]
+        self.din_clear(grid)
+        self.y_cood=4
+        self.din_show(grid, self.x_cood, self.y_cood, self.mode)
 
     #Clearing the position of din as he moves
     def din_clear(self, grid):  #CAERFUL

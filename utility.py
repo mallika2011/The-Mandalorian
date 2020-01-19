@@ -120,10 +120,8 @@ def movedin():
             obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
+            obj_din.new_din(obj_board.grid)
             obj_din.dec_lives()
-
-        else:
-            o = 1
 
     elif char == 'a':
         obj_din.set_fly_flag(0)
@@ -135,6 +133,7 @@ def movedin():
             obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
+            obj_din.new_din(obj_board.grid)
             obj_din.dec_lives()
 
     elif char == 'q':
@@ -152,8 +151,9 @@ def movedin():
             obj_din.y_cood=3
         obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
         if ispos==2:
+            obj_din.new_din(obj_board.grid)
             obj_din.dec_lives()
-            obj_din.dead = 0
+            
 
 
     elif char == ' ':
