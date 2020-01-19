@@ -9,7 +9,7 @@ class Background:
     #constructor function
     def __init__(self):
         self.__ceil="_"        #Private variables to ensure security
-        self.__floor=Fore.BLACK + Back.LIGHTGREEN_EX + Style.BRIGHT +"/"
+        self.__floor=Fore.WHITE + Back.MAGENTA + Style.BRIGHT +"/"+ Style.RESET_ALL
         self.__middle="="
 
     #function to create the floor

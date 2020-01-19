@@ -4,7 +4,7 @@ from headers import *
 from board import Board
 from din import Din
 from background import Background
-from others import *
+from objects import *
 
 # The board
 obj_board = Board(HT, WIDTH)
@@ -25,32 +25,36 @@ def print_header(newtime):
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "THE MANDALORIAN".center(SCREEN)+Style.RESET_ALL)
     print(Fore.WHITE + Back.LIGHTBLUE_EX+ Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
-    stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins())+"  |  TIME: " + str(newtime))
+    stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins()*10)+"  |  TIME: " + str(newtime))
     print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + stats.center(SCREEN))
     print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
-
 
 
 # Placing obstacles
 
 obj_beam_array = [Beam(0, 0) for i in range(30)]
+valy=10
 for i in range (0,30):
+    if(valy > WIDTH - 50):
+        break
     valx = random.randrange(35)
-    valy=random.randrange(250)
     obj_beam_array[i]=Beam(valx,valy)
-
-def beams_on_board(flag):
-    print(obj_board.flag)
+    #Placing beams which are horizontally at least 50 units apart
+    valy= (valy+70) 
+    
+def beams_on_board():
     ang = 0
     for i in range(len(obj_beam_array)):
-        obj_beam_array[i].place_beam(ang, obj_board.grid, flag)
+        if(obj_beam_array[i].canplace==0):
+            obj_beam_array[i].place_beam(ang, obj_board.grid)
+            obj_beam_array[i].angle=ang
+        elif(obj_beam_array[i].canplace==1):
+            obj_beam_array[i].print_beam(ang, obj_board.grid)
+
         if ang == 90:
             ang = 0
         else:
             ang += 45
-    if(flag==0):
-        flag=1
-
 
 
 # Placing coins
@@ -68,7 +72,6 @@ obj_bullets_array=[]
 
 def movedin():
     # moves the player
-
     def alarmhandler(signum, frame):
         # ''' input method '''
         raise AlarmException
@@ -85,8 +88,10 @@ def movedin():
             pass
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
         return ''
-    char = user_input()
+    INPUT_CHAR = user_input()
+    char=INPUT_CHAR
     if char == 'd':
+        obj_din.set_fly_flag(0)
         ispos = obj_din.check_collision(obj_board.grid)
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
@@ -101,7 +106,8 @@ def movedin():
         else:
             o = 1
 
-    if char == 'a':
+    elif char == 'a':
+        obj_din.set_fly_flag(0)
         ispos = obj_din.check_collision(obj_board.grid)
 
         if ispos == 1:
@@ -114,11 +120,13 @@ def movedin():
             obj_din.dec_lives()
             obj_din.dead = 0
 
-    if char == 'q':
+    elif char == 'q':
     	os.system("killall afplay")
     	quit()
 
-    if char == 'w':
+    elif char == 'w':
+        obj_din.set_fly_flag(1)
+        obj_din.set_drop_air_time(0)
         ispos = obj_din.check_collision(obj_board.grid)
         obj_din.din_clear(obj_board.grid)
         if obj_din.y_cood > 3 :
@@ -131,7 +139,7 @@ def movedin():
             obj_din.dead = 0
 
 
-    if char == ' ':
+    elif char == ' ':
         if(obj_din.shield_flag==0):
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood-=1 
@@ -140,10 +148,17 @@ def movedin():
             obj_din.shield_start_time=time.time()
 
 
-    if char == 'l':
-        print(obj_din.x_cood, obj_din.y_cood)
+    elif char == 'l':
+        # print(obj_din.x_cood, obj_din.y_cood)
+        obj_din.set_fly_flag(0)
         new_bullet=Bullet(obj_din.y_cood+1, obj_din.x_cood+5)
         new_bullet.place_bullet(obj_board.grid)
+        new_bullet.start=time.time()
+        new_bullet.active=1
         obj_bullets_array.append(new_bullet)
+    
+    else:
+        obj_din.set_fly_flag(0)
+
 
 

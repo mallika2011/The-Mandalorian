@@ -20,8 +20,8 @@ Bullets:
 
 Power Ups:
 
-[+]
-
+|+ +|
+|+ +|
 
 
 My board :

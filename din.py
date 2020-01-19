@@ -18,7 +18,7 @@ class Din(Person):
         self.dead=0
         self.direction=0
         self.shield_flag=0
-        self.fly_flag=0
+        self.__fly_flag=0
         self.mode=0
         self.shield_start_time=0
         self.__drop_air_time=0
@@ -27,6 +27,12 @@ class Din(Person):
 
     def show_lives(self):
         return self.__lives
+
+    def set_fly_flag(self,x):
+        self.__fly_flag=x
+
+    def show_fly_flag(self):
+        return self.__fly_flag
     
     def set_drop_air_time(self,x):
         self.__drop_air_time=x
@@ -92,18 +98,17 @@ class Din(Person):
 
     def gravity(self,grid):
         self.din_clear(grid)
-        # inc=3
-        inc = (round(0.5*GRAVITYVAL*(drop_start_time**2)))
+        inc = (round(0.5*GRAVITYVAL*(self.show_drop_air_time()**2)))
         if(self.mode ==0 ):
-            if(self.y_cood+inc<=35):
+            if(self.y_cood+inc<35):
                 for  i in range (inc):
-                    self.y_cood+=1
+                    self.y_cood+=inc
             else:
                 self.y_cood=35
         elif(self.mode==1):
-            if(self.y_cood+inc<=33):
+            if(self.y_cood+inc<33):
                 for i in range(inc):
-                    self.y_cood+=1
+                    self.y_cood+=inc
             else:
                 self.y_cood=33
         self.din_show(grid, self.x_cood, self.y_cood, self.mode)
@@ -111,16 +116,28 @@ class Din(Person):
     def remove_shield(self, grid):
         x=self.x_cood
         y=self.y_cood
-        grid[y,x+4:x+7]=' '
-        grid[y:y+5,x]=' '
-        grid[y-2:y+2,x-2:x+8]=' '
+
+        for i in range(x+4,x+7):
+            grid[y][i]=' '
+        for i in range(y,y+5):
+            grid[i][x]=' '
+        for i in range(y-2, y+2):
+            for j in range(x-2,x+8):
+                grid[i][j]=' '
         self.shield_flag=0        
 
 
     def check_collision(self,grid):
         x=self.x_cood
         y=self.y_cood
-        # print(x, y)
+
+        if(self.shield_flag==1):
+            for i in range (y-2,y+2):
+                for j in range (x-2, x+8):
+                    if(grid[i][j]=='$'):
+                        self.inc_coins()
+            return 1
+
         for i in range (y,y+3):
             for j in range (x, x+3):
                 if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3):

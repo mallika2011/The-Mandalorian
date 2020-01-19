@@ -9,9 +9,6 @@ import random
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
 
-#colours
-ENDC = '\033[m' # reset to the defaults
-TGREEN =  '\033[32m' # Green Text
 
 HT=40
 SCREEN=200
@@ -20,7 +17,7 @@ GAMETIME=100
 STARTPOS=25
 GRAVITYVAL=5
 BEAM_SIZE=20
-drop_start_time=-1
+INPUT_CHAR=''
 
 def line():
     for i in range(SCREEN):
@@ -31,11 +28,9 @@ def reposition_cursor(x,y):
     print("\033[%d;%dH" % (x, y))
 
 #OBJECTS:
-
-
-BEAM1=Fore.LIGHTYELLOW_EX+"#"+Fore.RESET
-BEAM2=Fore.LIGHTYELLOW_EX+"<"+Fore.RESET
-BEAM3=Fore.LIGHTYELLOW_EX+">"+Fore.RESET
+BEAM1=Fore.LIGHTGREEN_EX+"#"+Fore.RESET
+BEAM2=Fore.CYAN+"<"+Fore.RESET
+BEAM3=Fore.CYAN+">"+Fore.RESET
 
 
 

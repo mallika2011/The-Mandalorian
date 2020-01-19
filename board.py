@@ -25,7 +25,10 @@ class Board:
     def print_board(self, factor):
             for i in range(self.rows):
                 for j in range (factor, SCREEN+factor):
+                    
                     print(Fore.WHITE + Back.LIGHTBLACK_EX + Style.BRIGHT+self.grid[i][j], end='')
+                    # print(self.grid[i][j], end='')
+
                 print()
 
         

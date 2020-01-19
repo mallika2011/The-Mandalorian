@@ -1,10 +1,10 @@
 from headers import *
 
 # importing classes
-from board import Board
-from din import Din
-from background import Background
-from others import *
+# from board import Board
+# from din import Din
+# from background import Background
+# from objects import *
 from utility import * 
 
 # Start time of the game
@@ -12,22 +12,16 @@ start_time = time.time()
 screen_time=time.time()
 x=time.time()
 move=1
-flag=0
 
-print(flag)
-
-beams_on_board(flag)
-flag=1
-coins_on_board()
 os.system('clear')
+beams_on_board()
+coins_on_board()
 
 
 while True:
-    print(flag)
     newtime = GAMETIME - (round(time.time()) - round(start_time))
     reposition_cursor(0, 0)
     if(newtime == 0 or obj_din.show_lives() <= 0):
-        time.sleep(2)
         os.system('clear')
         game_over()
 
@@ -36,7 +30,6 @@ while True:
         print("YOUR SCORE IS : ", obj_din.show_coins())
         quit()
 
-    # print(obj_din.x_cood,obj_din.y_cood, factor, SCREEN, factor+SCREEN)
 
 
     #BOUNDARY CONDITIONS FOR DIN:
@@ -46,19 +39,15 @@ while True:
         obj_din.x_cood=factor+SCREEN-5
 
     #GRAVITY EFFECT
-    if(time.time()-x >=0.3):
+    if(obj_din.show_fly_flag()==0):
         if(obj_din.y_cood  < 35 and obj_din.mode == 0):
-            if(drop_start_time==-1):
-                drop_start_time=time.time()
+            if(obj_din.show_drop_air_time()==0):
+                obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
             obj_din.gravity(obj_board.grid)
-            x=time.time()
         elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
-            if(drop_start_time==-1):
-                drop_start_time=time.time()
+            if(obj_din.show_drop_air_time()==0):
+                obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
             obj_din.gravity(obj_board.grid)
-            x=time.time()
-        else :
-            drop_start_time=-1
 
     #SHIELD CHECKER
     if(obj_din.shield_flag==1):
@@ -68,21 +57,19 @@ while True:
 
     #MOVING EXISTING BULLETS:
     for i in range (len(obj_bullets_array)):
+        if(obj_bullets_array[i].active==0):
+            continue
+        if(obj_bullets_array[i].check_collision(obj_board.grid)==1):
+            o=1
+        else:
+            obj_bullets_array[i].shoot(obj_board.grid)
         
-        # if(obj_bullets_array[i].check_collision()==1):
-        #     o=1
-        # else:
-        obj_bullets_array[i].shoot(obj_board.grid)
-        
+        if(time.time()-obj_bullets_array[i].start > 10):
+            obj_bullets_array[i].active=0
+            obj_bullets_array[i].clear_bullet(obj_board.grid)
 
     print_header(newtime)
-
-    #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
-    # beams_on_board()
-    # obj_board.print_board(factor)
-    # movedin()
-    
-
+     
     #PRINTING DIN
     if obj_din.shield_flag == 0 :
         obj_din.mode = 0
@@ -91,7 +78,7 @@ while True:
 
 
     #MOVING THE BOARD AND MANDO
-    if(time.time()-screen_time>=0.4):
+    if(time.time()-screen_time>=0.2):
         if factor >= WIDTH-SCREEN-1:
             factor = WIDTH-SCREEN-1
             move=0
@@ -100,8 +87,9 @@ while True:
         screen_time=time.time()
         obj_din.din_clear(obj_board.grid)
         obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
-
-    beams_on_board(flag)
+    
+    #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
+    beams_on_board()
     obj_board.print_board(factor)
     movedin()
     
