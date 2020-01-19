@@ -12,10 +12,10 @@ from getch import _getChUnix as getChar
 
 HT=40
 SCREEN=200
-WIDTH=500
+WIDTH=275
 GAMETIME=100
 STARTPOS=25
-GRAVITYVAL=5
+GRAVITYVAL=1
 BEAM_SIZE=20
 INPUT_CHAR=''
 
@@ -29,8 +29,11 @@ def reposition_cursor(x,y):
 
 #OBJECTS:
 BEAM1=Fore.LIGHTGREEN_EX+"#"+Fore.RESET
-BEAM2=Fore.CYAN+"<"+Fore.RESET
-BEAM3=Fore.CYAN+">"+Fore.RESET
+BEAM2=Fore.LIGHTGREEN_EX+"<"+Fore.RESET
+BEAM3=Fore.LIGHTGREEN_EX+">"+Fore.RESET
+
+COIN = Fore.YELLOW + "$"+Fore.RESET
+PLUS=Fore.WHITE+Back.CYAN+"+"+Style.RESET_ALL
 
 
 

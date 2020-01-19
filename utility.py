@@ -45,7 +45,7 @@ for i in range (0,30):
 def beams_on_board():
     ang = 0
     for i in range(len(obj_beam_array)):
-        if(obj_beam_array[i].canplace==0):
+        if(obj_beam_array[i].canplace==0 and obj_beam_array[i].onboard==0):
             obj_beam_array[i].place_beam(ang, obj_board.grid)
             obj_beam_array[i].angle=ang
         elif(obj_beam_array[i].canplace==1):
@@ -65,6 +65,25 @@ def coins_on_board():
         obj_coin = Coins(valx, valy)
         if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
             obj_coin.place_coin(obj_board.grid)
+
+#Placing Powerups 
+def power_on_board():
+    for i in range(5):
+        valx = random.randrange(5, HT-10)
+        valy = random.randrange(0, WIDTH-10)
+        obj_power=Powerup(valx,valy)
+        obj_power.place_power(obj_board.grid)
+
+def no_beam(x,y,grid):
+    # print("popopop:",x, y)
+    for i in range(len(obj_beam_array)):
+        xco=obj_beam_array[i].x
+        yco=obj_beam_array[i].y
+        if(xco<=x<=xco+20    and    yco<=y<yco+20):
+            # "found one  "
+            obj_beam_array[i].canplace=0
+            obj_beam_array[i].clear_beam(grid)
+        
 
 #Bullets array 
 obj_bullets_array=[]
@@ -90,18 +109,18 @@ def movedin():
         return ''
     INPUT_CHAR = user_input()
     char=INPUT_CHAR
+
+
     if char == 'd':
         obj_din.set_fly_flag(0)
         ispos = obj_din.check_collision(obj_board.grid)
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood += 1
-            obj_din.direction = 1
             obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
             obj_din.dec_lives()
-            obj_din.dead = 0
 
         else:
             o = 1
@@ -113,12 +132,10 @@ def movedin():
         if ispos == 1:
             obj_din.din_clear(obj_board.grid)
             obj_din.x_cood -= 1
-            obj_din.direction = -1
             obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
 
         elif ispos == 2:
             obj_din.dec_lives()
-            obj_din.dead = 0
 
     elif char == 'q':
     	os.system("killall afplay")
@@ -159,6 +176,7 @@ def movedin():
     
     else:
         obj_din.set_fly_flag(0)
+        obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
 
 
 

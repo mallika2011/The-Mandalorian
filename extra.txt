@@ -20,8 +20,8 @@ Bullets:
 
 Power Ups:
 
-|+ +|
-|+ +|
++++
++++
 
 
 My board :
@@ -71,6 +71,13 @@ BEAMS:
 >                   >
 
 
+
+MAGNET:
+
+xxxxxxxxxxxx
+xxxxxxxxxxxx
+xxxx    xxxx
+xxxx    xxxx
 
 
 

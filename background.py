@@ -2,15 +2,11 @@ from headers import *
 
 class Background:
 
-    #Places the background of the game
-    #Height of the playing board will be 50 rows 
-    #Max width of the playing board will be 1000 coloumns
-
     #constructor function
     def __init__(self):
-        self.__ceil="_"        #Private variables to ensure security
+        self.__ceil=Fore.BLACK + Back.LIGHTYELLOW_EX + Style.BRIGHT +"_" +Style.RESET_ALL       #Private variables to ensure security
         self.__floor=Fore.WHITE + Back.MAGENTA + Style.BRIGHT +"/"+ Style.RESET_ALL
-        self.__middle="="
+        self.__middle=Fore.BLACK + Back.LIGHTYELLOW_EX + Style.BRIGHT +"="+Style.RESET_ALL
 
     #function to create the floor
     def display_floor(self,boundary):
