@@ -63,7 +63,7 @@ def coins_on_board():
         valx = random.randrange(5, HT-10)
         valy = random.randrange(0, WIDTH-10)
         obj_coin = Coins(valx, valy)
-        if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+2] == ' '):
+        if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+1] == ' '):
             obj_coin.place_coin(obj_board.grid)
 
 #Placing Powerups 
