@@ -9,13 +9,14 @@ class Din(Person):
     def __init__(self, x_cood, y_cood):
         # self.x_cood=x_cood
         # self.y_cood=y_cood
-        self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]],)   #3x3 matrix
+        self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]])   #3x3 matrix
         self.__body_fly=np.array([[" "," ","O"," "," "],["{","|"," ","|","}"],[" ","/"," ", "\\"," "]])
         self.__body_shield=np.array([["-","-","-","-","-","-","-"],["|"," "," ","O"," "," ","|"],["|"," ","{","|","}"," ","|"],["|"," ","/"," ","\\"," ","|"],["-","-","-","-","-","-","-"]])
+        self.__body_s=[[Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"O"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL],[Fore.LIGHTCYAN_EX+"{"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"|"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"}"+Style.RESET_ALL],[Fore.LIGHTCYAN_EX+"/"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"\\"+Style.RESET_ALL]]
         self.__lives=10
         self.__coins=0
         self.shield_flag=0
-        self.__fly_flag=0
+        self.__fly_flag=0 
         self.__powerflag=0
         self.mode=0
         self.shield_start_time=0
@@ -81,34 +82,27 @@ class Din(Person):
         x=self.x_cood
         y=self.y_cood
         flag=self.check_collision(grid)
-        if(self.mode==0):
-            for i in range(y, y+3):
-                for j in range(x,x+3):
-                    grid[i][j]=' '
-        elif self.mode == 1 :
-            for i in range(y-2, y+5):
-                for j in range(x-2,x+7):
-                    grid[i][j]=' '
+        for i in range(y, y+3):
+            for j in range(x,x+3):
+                grid[i][j]=' '
         if flag==2:
             self.dec_lives()
             
     #New position of din as he moves
     def din_show(self, grid,x,y, mode):
-        if mode == 0:
-            self.din_clear(grid)
-            self.x_cood=x
-            self.y_cood=y
+        # if mode == 0:
+        self.din_clear(grid)
+        self.x_cood=x
+        self.y_cood=y
+
+        if(self.shield_flag==0):
             for i in range(y,y+3):
                 for j in range(x, x+3):
                     grid[i][j]=self.__body[i-y][j-x]
-
-        elif mode == 1:  #for shielded mode
-            self.din_clear(grid)
-            self.x_cood=x
-            self.y_cood=y
-            for i in range(y,y+5):
-                for j in range(x, x+7):
-                    grid[i][j]=self.__body_shield[i-y][j-x]
+        elif(self.shield_flag==1):
+            for i in range(y,y+3):
+                for j in range(x, x+3):
+                    grid[i][j]=self.__body_s[i-y][j-x]
 
     def gravity_check_coins(self,inc, grid):
         x=self.x_cood
@@ -123,32 +117,28 @@ class Din(Person):
     def gravity(self,grid):
         self.din_clear(grid)
         inc = (round(0.5*GRAVITYVAL*(self.show_drop_air_time()**2)))
-        if(self.mode ==0 ):
-            if(self.y_cood+inc<35):
-                self.gravity_check_coins(inc,grid)
-                for  i in range (inc):
-                    self.y_cood+=1
-            else:
-                self.y_cood=35
-        elif(self.mode==1):
-            if(self.y_cood+inc<33):
-                for i in range(inc):
-                    self.y_cood+=inc
-            else:
-                self.y_cood=33
+        # if(self.mode ==0 ):
+        if(self.y_cood+inc<35):
+            self.gravity_check_coins(inc,grid)
+            for  i in range (inc):
+                self.y_cood+=1
+        else:
+            self.y_cood=35
         self.din_show(grid, self.x_cood, self.y_cood, self.mode)
+    
+    def add_shield(self,grid):
+        for i in range(self.y_cood, self.y_cood+3):
+            for j in range(self.x_cood, self.x_cood+3):
+                grid[i][j]=self.__body_s[i-self.y_cood][j-self.x_cood]
 
     def remove_shield(self, grid):
         x=self.x_cood
         y=self.y_cood
 
-        for i in range(x+4,x+7):
-            grid[y][i]=' '
-        for i in range(y,y+5):
-            grid[i][x]=' '
-        for i in range(y-2, y+2):
-            for j in range(x-2,x+8):
-                grid[i][j]=' '
+        for i in range(y,y+3):
+            for j in range(x,x+3):
+                grid[i][j]=self.__body[i-y][j-x]
+
         self.shield_flag=0        
 
 

@@ -205,8 +205,7 @@ def movedin():
     elif char == ' ':
         if(obj_din.shield_flag==0 and obj_din.show_fly_flag()==0):  #Activate shield only when on ground
             obj_din.din_clear(obj_board.grid)
-            obj_din.x_cood-=1 
-            obj_din.y_cood-=4
+            obj_din.add_shield(obj_board.grid)
             obj_din.shield_flag=1
             obj_din.mode=1
             obj_din.shield_start_time=time.time()

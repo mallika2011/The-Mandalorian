@@ -47,15 +47,11 @@ while True:
 
     #GRAVITY EFFECT
     if(obj_din.show_fly_flag()==0 and obj_din.show_magnet_flag()==0):
-        if(obj_din.y_cood  < 35 and obj_din.mode == 0):
+        if(obj_din.y_cood  < 35):
             if(obj_din.show_drop_air_time()==0):
                 obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
             obj_din.gravity(obj_board.grid)
-        elif (obj_din.y_cood  < 33 and obj_din.mode == 1):
-            if(obj_din.show_drop_air_time()==0):
-                obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
-            obj_din.gravity(obj_board.grid)
-
+        
     #SHIELD CHECKER
     if(obj_din.shield_flag==1):
         if(time.time()-obj_din.shield_start_time>=10):
