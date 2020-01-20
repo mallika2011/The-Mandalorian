@@ -12,7 +12,7 @@ from getch import _getChUnix as getChar
 
 HT=40
 SCREEN=200
-WIDTH=400
+WIDTH=350
 GAMETIME=100
 STARTPOS=25
 GRAVITYVAL=1

@@ -5,6 +5,7 @@ from board import Board
 from din import Din
 from background import Background
 from objects import *
+from dragon import *
 
 # The board
 obj_board = Board(HT, WIDTH)
@@ -15,13 +16,18 @@ factor = 0
 obj_din = Din(STARTPOS, 35)
 obj_din.din_show(obj_board.grid, factor+1+STARTPOS, 35,0)
 
+# The Dragon
+obj_dragon=Dragon(WIDTH-len(dragon[0]),HT-2-len(dragon)-1)
+obj_dragon.dragon_show(obj_board.grid)
+
+
 # The background
 obj_back = Background()
 obj_back.display_ceil(obj_board.grid)
 obj_back.display_floor(obj_board.grid)
 
 #The magnet
-obj_magnet=Magnet(5,random.randrange(30,WIDTH-100))
+obj_magnet=Magnet(5,random.randrange(30,WIDTH-200))
 obj_magnet.place_magnet(obj_board.grid)
 
 #PRINTING HEADERS
