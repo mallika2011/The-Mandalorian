@@ -9,8 +9,10 @@ move=1
 
 os.system('clear')
 beams_on_board()
+# obj_magnet.place_magnet(obj_board.grid)
 coins_on_board()
 power_on_board()
+power_place()
 
 
 while True:
@@ -21,7 +23,8 @@ while True:
         game_over()
 
         print()
-        print("LIVES FINISHED :(")
+        if(obj_din.show_lives() <= 0):
+            print("LIVES FINISHED :(")
         print()
         print("BETTER LUCK NEXT TIME!")
         print()
@@ -31,11 +34,11 @@ while True:
     #BOUNDARY CONDITIONS FOR DIN:
 
     if(obj_din.show_magnet_flag()==0):
-        if(obj_din.x_cood < factor+1):
-            obj_din.x_cood=factor+1
-        if(obj_din.x_cood >= factor+SCREEN-5):
-            obj_din.x_cood=factor+SCREEN-5
-    elif(obj_din.x_cood < factor+1):
+        if(obj_din.getx() < factor+1):
+            obj_din.setx(factor+1)
+        if(obj_din.getx() >= factor+SCREEN-5):
+            obj_din.setx(factor+SCREEN-5)
+    elif(obj_din.getx() < factor+1):
             os.system('clear')
             game_over()
             print()
@@ -47,14 +50,14 @@ while True:
 
     #GRAVITY EFFECT
     if(obj_din.show_fly_flag()==0 and obj_din.show_magnet_flag()==0):
-        if(obj_din.y_cood  < 35):
+        if(obj_din.gety()  < 35):
             if(obj_din.show_drop_air_time()==0):
                 obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
             obj_din.gravity(obj_board.grid)
         
     #SHIELD CHECKER
-    if(obj_din.shield_flag==1):
-        if(time.time()-obj_din.shield_start_time>=10):
+    if(obj_din.show_shield_flag()==1):
+        if(time.time()-obj_din.show_sstart_time()>=10):
             #remove shield after 10s
             obj_din.remove_shield(obj_board.grid)
 
@@ -64,7 +67,7 @@ while True:
             continue
         if(obj_bullets_array[i].check_collision(obj_board.grid)==1 or obj_bullets_array[i].show_crash()==1): #If collision
             obj_bullets_array[i].active=0
-            no_beam(obj_bullets_array[i].x, obj_bullets_array[i].y,obj_board.grid)
+            no_beam(obj_bullets_array[i].getx(), obj_bullets_array[i].gety(),obj_board.grid)
             obj_bullets_array[i].clear_bullet(obj_board.grid)
         else:
             obj_bullets_array[i].shoot(obj_board.grid)
@@ -79,14 +82,14 @@ while True:
     check_magnet(obj_din, obj_board.grid)
      
     #PRINTING DIN
-    if obj_din.shield_flag == 0 :
-        obj_din.mode = 0
-    elif obj_din.shield_flag ==1 :
-        obj_din.mode=1
+    if obj_din.show_shield_flag() == 0 :
+        obj_din.set_mode(0)
+    elif obj_din.show_shield_flag() ==1 :
+        obj_din.set_mode(1)
 
     #POWER UP CHECK
-    if(obj_din.power_start_time!=0 and time.time()-obj_din.power_start_time >10):
-        obj_din.power_start_time=0
+    if(obj_din.show_pstart_time()!=0 and time.time()-obj_din.show_pstart_time()>10):
+        obj_din.set_pstart_time(0)
         obj_din.set_power(0)
         move=1
 
@@ -103,12 +106,12 @@ while True:
             move=4
         screen_time=time.time()
         obj_din.din_clear(obj_board.grid)
-        obj_din.din_show(obj_board.grid,move+obj_din.x_cood, obj_din.y_cood,obj_din.mode)
+        obj_din.din_show(obj_board.grid,move+obj_din.getx(), obj_din.gety(),obj_din.show_mode())
     
     #PRINT THE BOARD MAP WITH APPROPRIATE SCREEN WIDTH
     beams_on_board()
     obj_board.print_board(factor)
     movedin()
     obj_magnet.place_magnet(obj_board.grid)
-
+    power_place()
     

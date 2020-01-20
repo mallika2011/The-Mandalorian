@@ -6,16 +6,16 @@ class Board:
 
     #constructor function
     def __init__(self, rows,cols):
-        self.rows=rows
-        self.cols=cols
+        self.__rows=rows
+        self.__cols=cols
         self.grid=[]
-        self.flag=0
+        self.__flag=0
 
     #function to create the playing board
     def create_board(self):
-        for i in range(self.rows):
+        for i in range(self.__rows):
             self.temp=[]
-            for j in range(self.cols):
+            for j in range(self.__cols):
                 self.temp.append(" ")
             self.grid.append(self.temp)
         # self.grid=np.array(self.grid)
@@ -23,13 +23,12 @@ class Board:
 
     #function to print the playing board
     def print_board(self, factor):
-            for i in range(self.rows):
+            for i in range(self.__rows):
                 for j in range (factor, SCREEN+factor):
                     
                     # print(Back.LIGHTBLACK_EX +self.grid[i][j] + Back.RESET, end='')
                     print(self.grid[i][j],end='')
-                    # print(self.grid[i][j], end='')
-
+                    
                 print()
 
         

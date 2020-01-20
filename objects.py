@@ -3,9 +3,21 @@ from colorama import init
 class Objects:
 
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.shape=np.zeros((100), dtype='<U1000')  #Polymorphism
+        self._x = x
+        self._y = y
+        self.shape=np.zeros((100), dtype='<U1000')
+
+    def setx(self, x):
+        self._x=x
+    def sety(self,y):
+        self._y=y
+    def getx(self):
+        return self._x
+    def gety(self):
+        return self._y
+
+    # def show(self,shape)
+
 
 
 #CLASS FOR THE BEAMS
@@ -47,14 +59,10 @@ class Beam(Objects):
                             return 1
 
             return 0
-
-        #while shooting bullets
-        elif(task==2):
-            o=1
     
     def place_beam(self,angle, grid):
-        x = self.x
-        y = self.y
+        x = self.getx()
+        y = self.gety()
         self.create_beam()
         self.onboard=1 
         #AVOID CROSSING BEAMS
@@ -83,8 +91,8 @@ class Beam(Objects):
                         temp += 1
     
     def print_beam(self,angle,grid):
-        x = self.x
-        y = self.y
+        x = self.getx()
+        y = self.gety()
         self.create_beam()
         temp = 0
         if(angle == 90):
@@ -105,15 +113,15 @@ class Beam(Objects):
     def clear_beam(self,grid):
         a=self.angle
         if(a==0):
-            for i in range(self.y, self.y+20):
-                grid[self.x][i]=" "
+            for i in range(self.gety(), self.gety()+20):
+                grid[self.getx()][i]=" "
         elif(a==90):
-            for i in range(self.x, self.x+20):
-                grid[i][self.y]=" "
+            for i in range(self.getx(), self.getx()+20):
+                grid[i][self.gety()]=" "
         elif(a==45):
-            for i in range(self.x, self.x+20):
-                for j in range(self.y, self.y+20):
-                    if(i-self.x==j-self.y):
+            for i in range(self.getx(), self.getx()+20):
+                for j in range(self.gety(), self.gety()+20):
+                    if(i-self.getx()==j-self.gety()):
                         grid[i][j]= " "
            
 
@@ -125,7 +133,7 @@ class Coins (Objects):
     
     def place_coin(self, grid):
         self.shape.fill(COIN)
-        grid[self.x][self.y]=COIN
+        grid[self.getx()][self.gety()]=COIN
 
 class Bullet(Objects):
     def __init__(self,x,y):
@@ -142,8 +150,8 @@ class Bullet(Objects):
         return self.__crash
 
     def clear_bullet(self, grid):
-        x=self.x
-        y=self.y
+        x=self.getx()
+        y=self.gety()
 
         for i in range(y-2,y+3):
             grid[x][i]=' '
@@ -154,29 +162,29 @@ class Bullet(Objects):
         self.shape[2]=')'
 
         for i in range(3):
-            grid[self.x][self.y+i]=self.shape[i]
+            grid[self.getx()][self.gety()+i]=self.shape[i]
         
     def shoot(self, grid):
         self.clear_bullet(grid)
 
-        if(self.y+5 > WIDTH -10):
+        if(self.gety()+5 > WIDTH -10):
             self.active =0
         else:
             if(self.active==0):
-                self.y+=1
+                self.sety(self.gety()+1)
             else:
-                for i in range(self.y-10, self.y+10):
-                    if(grid[self.x][i]==BEAM1 or grid[self.x][i]==BEAM2  or grid[self.x][i]==BEAM3):
-                        self.y=i
+                for i in range(self.gety()-10, self.gety()+10):
+                    if(grid[self.getx()][i]==BEAM1 or grid[self.getx()][i]==BEAM2  or grid[self.getx()][i]==BEAM3):
+                        self.sety(i)
                         self.set_crash(1)
-                self.y+=5
+                self.sety(self.gety()+5)
             self.place_bullet(grid)
             self.active=1
 
 
     def check_collision(self, grid):
         for i in range(3):
-            if(grid[self.x][self.y+i]==BEAM1 or grid[self.x][self.y+i]==BEAM2 or grid[self.x][self.y+i]==BEAM3 ):
+            if(grid[self.getx()][self.gety()+i]==BEAM1 or grid[self.getx()][self.gety()+i]==BEAM2 or grid[self.getx()][self.gety()+i]==BEAM3 ):
                 self.set_crash(1)
                 return 1
         return 0
@@ -186,8 +194,8 @@ class Powerup(Objects):
         Objects.__init__(self,x,y)
 
     def place_power(self,grid):
-        for i in range (self.x, self.x+2):
-            for j in range(self.y, self.y+3):
+        for i in range (self.getx(), self.getx()+2):
+            for j in range(self.gety(), self.gety()+3):
                 grid[i][j]=PLUS
 
 
@@ -196,16 +204,16 @@ class Magnet(Objects):
         Objects.__init__(self,x,y)
 
     def place_magnet(self, grid):
-        for i in range(self.x,self.x+5):
-            for j in range(self.y,self.y+12):
-                if(i-self.x>1):
-                    if(j-self.y<4 or j-self.y >=8):
+        for i in range(self.getx(),self.getx()+5):
+            for j in range(self.gety(),self.gety()+12):
+                if(i-self.getx()>1):
+                    if(j-self.gety()<4 or j-self.gety() >=8):
                         grid[i][j]=MAGNET
                     else :
                         grid[i][j]=" "
-                elif (i-self.x<=1 and (j-self.y==0 or j-self.y==11)):
+                elif (i-self.getx()<=1 and (j-self.gety()==0 or j-self.gety()==11)):
                     grid[i][j]=" "
-                elif(i-self.x==0 and (j-self.y==1 or j-self.y==10)):
+                elif(i-self.getx()==0 and (j-self.gety()==1 or j-self.gety()==10)):
                     grid[i][j]=" "
                 else:
                     grid[i][j]=MAGNET

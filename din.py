@@ -13,16 +13,41 @@ class Din(Person):
         self.__body_s=[[Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"O"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL],[Fore.LIGHTCYAN_EX+"{"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"|"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"}"+Style.RESET_ALL],[Fore.LIGHTCYAN_EX+"/"+Style.RESET_ALL,Fore.LIGHTCYAN_EX+" "+Style.RESET_ALL,Fore.LIGHTCYAN_EX+"\\"+Style.RESET_ALL]]
         self.__lives=10
         self.__coins=0
-        self.shield_flag=0
+        self.__shield_flag=0
         self.__fly_flag=0 
         self.__powerflag=0
-        self.mode=0
-        self.shield_start_time=0
-        self.power_start_time=0
+        self.__mode=0
+        self.__shield_start_time=0
+        self.__power_start_time=0
         self.__drop_air_time=0
         self.__magnet_flag=0
 
         Person.__init__(self,x_cood,y_cood)
+
+    
+    def set_shield_flag(self,x):
+        self.__shield_flag=x
+    
+    def show_shield_flag(self):
+        return self.__shield_flag
+
+    def set_mode(self,x):
+        self.__mode=x
+    
+    def show_mode(self):
+        return self.__mode
+
+    def set_sstart_time(self,x):
+        self.__shield_start_time=x
+    
+    def show_sstart_time(self):
+        return self.__shield_start_time
+
+    def set_pstart_time(self,x):
+        self.__power_start_time=x
+    
+    def show_pstart_time(self):
+        return self.__power_start_time
 
     def show_lives(self):
         return self.__lives
@@ -70,15 +95,15 @@ class Din(Person):
 
     def new_din(self,grid):
         self.din_clear(grid)
-        self.y_cood=4
-        self.x_cood+=10
+        self.sety(4)
+        self.setx(self.getx()+10)
         self.set_lives(self.show_lives()+2)
-        self.din_show(grid, self.x_cood, self.y_cood, self.mode)
+        self.din_show(grid, self.getx(), self.gety(), self.show_mode())
 
     #Clearing the position of din as he moves
     def din_clear(self, grid):  #CAERFUL
-        x=self.x_cood
-        y=self.y_cood
+        x=self.getx()
+        y=self.gety()
         flag=self.check_collision(grid)
         for i in range(y, y+3):
             for j in range(x,x+3):
@@ -90,77 +115,65 @@ class Din(Person):
     def din_show(self, grid,x,y, mode):
         # if mode == 0:
         self.din_clear(grid)
-        self.x_cood=x
-        self.y_cood=y
+        self.setx(x)
+        self.sety(y)
 
-        if(self.shield_flag==0):
+        if(self.show_shield_flag()==0):
             for i in range(y,y+3):
                 for j in range(x, x+3):
                     grid[i][j]=self.__body[i-y][j-x]
-        elif(self.shield_flag==1):
+        elif(self.show_shield_flag()==1):
             for i in range(y,y+3):
                 for j in range(x, x+3):
                     grid[i][j]=self.__body_s[i-y][j-x]
 
-    def gravity_check_coins(self,inc, grid):
-        x=self.x_cood
-        y=self.y_cood
-        for i in range(y, y+inc+1):
-            for j in range(x,x+1):
-                if(grid[i][j]==COIN):
-                    grid[i][j]==" "
-                    self.inc_coins()
-
-
     def gravity(self,grid):
         self.din_clear(grid)
         inc = (round(0.5*GRAVITYVAL*(self.show_drop_air_time()**2)))
-        # if(self.mode ==0 ):
-        if(self.y_cood+inc<35):
-            self.gravity_check_coins(inc,grid)
+        if(self.gety()+inc<35):
+            
             for  i in range (inc):
-                self.y_cood+=1
+                ispos = self.check_collision(grid)
+                if ispos==2:
+                    self.new_din(grid)
+                    self.dec_lives()
+                    break
+                else:
+                    self.sety(self.gety()+1)
         else:
-            self.y_cood=35
-        self.din_show(grid, self.x_cood, self.y_cood, self.mode)
+            self.sety(35)
+        self.din_show(grid, self.getx(), self.gety(), self.show_mode)
     
     def add_shield(self,grid):
-        for i in range(self.y_cood, self.y_cood+3):
-            for j in range(self.x_cood, self.x_cood+3):
-                grid[i][j]=self.__body_s[i-self.y_cood][j-self.x_cood]
+        for i in range(self.gety(), self.gety()+3):
+            for j in range(self.getx(), self.getx()+3):
+                grid[i][j]=self.__body_s[i-self.gety()][j-self.getx()]
 
     def remove_shield(self, grid):
-        x=self.x_cood
-        y=self.y_cood
+        x=self.getx()
+        y=self.gety()
 
         for i in range(y,y+3):
             for j in range(x,x+3):
                 grid[i][j]=self.__body[i-y][j-x]
 
-        self.shield_flag=0        
+        self.set_shield_flag(0)        
 
 
     def check_collision(self,grid):
-        x=self.x_cood
-        y=self.y_cood
-
-        if(self.shield_flag==1):
-            for i in range (y-2,y+2):
-                for j in range (x-2, x+8):
-                    if(grid[i][j]==COIN):
-                        self.inc_coins()
-            return 1
-
+        x=self.getx()
+        y=self.gety()
         for i in range (y,y+3):
             for j in range (x, x+3):
-                if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3):
+                if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3 and self.show_shield_flag()==0):
                     return 2 #not possible
                     #TODO dead sound
                 elif(grid[i][j]==COIN):
                     self.inc_coins()
+                    grid[i][j]=" "
 
                 elif(grid[i][j]==PLUS):
-                    self.power_start_time=time.time()
+                    self.set_pstart_time(time.time())
                     self.set_power(1)                    
         return 1
                     
