@@ -21,6 +21,7 @@ class Din(Person):
         self.shield_start_time=0
         self.power_start_time=0
         self.__drop_air_time=0
+        self.__magnet_flag=0
 
         Person.__init__(self,x_cood,y_cood)
 
@@ -29,6 +30,12 @@ class Din(Person):
 
     def set_fly_flag(self,x):
         self.__fly_flag=x
+
+    def set_magnet_flag(self,x):
+        self.__magnet_flag=x
+    
+    def show_magnet_flag(self):
+        return self.__magnet_flag
 
     def set_power(self,x):
         self.__powerflag=x
@@ -46,6 +53,9 @@ class Din(Person):
 
     def dec_lives(self):
         self.__lives-=1
+
+    def set_lives(self,x):
+        self.__lives=x
     
     def show_coins(self):
         return self.__coins
@@ -62,6 +72,8 @@ class Din(Person):
     def new_din(self,grid):
         self.din_clear(grid)
         self.y_cood=4
+        self.x_cood+=10
+        self.set_lives(self.show_lives()+2)
         self.din_show(grid, self.x_cood, self.y_cood, self.mode)
 
     #Clearing the position of din as he moves

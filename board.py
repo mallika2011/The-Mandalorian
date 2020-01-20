@@ -26,7 +26,8 @@ class Board:
             for i in range(self.rows):
                 for j in range (factor, SCREEN+factor):
                     
-                    print(Fore.WHITE + Back.LIGHTBLACK_EX + Style.BRIGHT+self.grid[i][j], end='')
+                    # print(Back.LIGHTBLACK_EX +self.grid[i][j] + Back.RESET, end='')
+                    print(self.grid[i][j],end='')
                     # print(self.grid[i][j], end='')
 
                 print()

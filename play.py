@@ -21,18 +21,32 @@ while True:
         game_over()
 
         print()
-        print("Better luck next time!")
+        print("LIVES FINISHED :(")
+        print()
+        print("BETTER LUCK NEXT TIME!")
+        print()
         print("YOUR SCORE IS : ", obj_din.show_coins())
         quit()
 
     #BOUNDARY CONDITIONS FOR DIN:
-    if(obj_din.x_cood < factor+1):
-        obj_din.x_cood=factor+1
-    if(obj_din.x_cood >= factor+SCREEN-5):
-        obj_din.x_cood=factor+SCREEN-5
+
+    if(obj_din.show_magnet_flag()==0):
+        if(obj_din.x_cood < factor+1):
+            obj_din.x_cood=factor+1
+        if(obj_din.x_cood >= factor+SCREEN-5):
+            obj_din.x_cood=factor+SCREEN-5
+    elif(obj_din.x_cood < factor+1):
+            os.system('clear')
+            game_over()
+            print()
+            print("DON'T LET THE MAGNET DEFEAT YOU!")
+            print()
+            print("BETTER LUCK NEXT TIME!")
+            print("YOUR SCORE IS : ", obj_din.show_coins())
+            quit()
 
     #GRAVITY EFFECT
-    if(obj_din.show_fly_flag()==0):
+    if(obj_din.show_fly_flag()==0 and obj_din.show_magnet_flag()==0):
         if(obj_din.y_cood  < 35 and obj_din.mode == 0):
             if(obj_din.show_drop_air_time()==0):
                 obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
@@ -64,6 +78,9 @@ while True:
             obj_bullets_array[i].clear_bullet(obj_board.grid)
 
     print_header(newtime)
+
+    #Check Magnet
+    check_magnet(obj_din, obj_board.grid)
      
     #PRINTING DIN
     if obj_din.shield_flag == 0 :
@@ -96,4 +113,6 @@ while True:
     beams_on_board()
     obj_board.print_board(factor)
     movedin()
+    obj_magnet.place_magnet(obj_board.grid)
+
     

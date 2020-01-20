@@ -191,8 +191,24 @@ class Powerup(Objects):
                 grid[i][j]=PLUS
 
 
-# class Magnet(Objects):
-#     def __init__(self, x,y):
+class Magnet(Objects):
+    def __init__(self, x,y):
+        Objects.__init__(self,x,y)
+
+    def place_magnet(self, grid):
+        for i in range(self.x,self.x+5):
+            for j in range(self.y,self.y+12):
+                if(i-self.x>1):
+                    if(j-self.y<4 or j-self.y >=8):
+                        grid[i][j]=MAGNET
+                    else :
+                        grid[i][j]=" "
+                elif (i-self.x<=1 and (j-self.y==0 or j-self.y==11)):
+                    grid[i][j]=" "
+                elif(i-self.x==0 and (j-self.y==1 or j-self.y==10)):
+                    grid[i][j]=" "
+                else:
+                    grid[i][j]=MAGNET
 
 
 

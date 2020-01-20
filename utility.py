@@ -20,6 +20,10 @@ obj_back = Background()
 obj_back.display_ceil(obj_board.grid)
 obj_back.display_floor(obj_board.grid)
 
+#The magnet
+obj_magnet=Magnet(5,random.randrange(30,WIDTH-100))
+obj_magnet.place_magnet(obj_board.grid)
+
 #PRINTING HEADERS
 def print_header(newtime):
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
@@ -59,7 +63,7 @@ def beams_on_board():
 
 # Placing coins
 def coins_on_board():
-    for i in range(100):
+    for i in range(50):
         valx = random.randrange(5, HT-10)
         valy = random.randrange(0, WIDTH-100)
         obj_coin = Coins(valx, valy)
@@ -68,11 +72,19 @@ def coins_on_board():
 
 #Placing Powerups 
 def power_on_board():
-    for i in range(5):
+    count = 0
+    while(count<5):
         valx = random.randrange(5, HT-10)
         valy = random.randrange(0, WIDTH-100)
+
+        for i in range(valx-1, valx+2+1):
+            for j in range(valy-1, valy+3+1):
+                if(obj_board.grid[i][j]!=" "):
+                    continue
+
         obj_power=Powerup(valx,valy)
         obj_power.place_power(obj_board.grid)
+        count+=1
 
 def no_beam(x,y,grid):
     # print("popopop:",x, y)
@@ -83,7 +95,33 @@ def no_beam(x,y,grid):
             # "found one  "
             obj_beam_array[i].canplace=0
             obj_beam_array[i].clear_beam(grid)
-        
+
+    
+
+def check_magnet(din, grid):
+    din.din_clear(grid)
+    if(obj_magnet.y-din.x_cood < 10 and obj_magnet.y>din.x_cood): #As close as 10 units
+        # print("in")
+        if(din.y_cood>5):
+            din.y_cood-=1
+        else:
+            din.y_cood=5
+        din.x_cood+=2
+        din.set_magnet_flag(1)
+
+    elif(din.x_cood-obj_magnet.y<10 and din.x_cood >= obj_magnet.y):
+        # print("in2")
+        if(din.y_cood>5):
+            din.y_cood-=1
+        else:
+            din.y_cood=5
+        din.x_cood-=1
+        din.set_magnet_flag(1)
+
+    else:
+        din.set_magnet_flag(0)
+    din.din_show(grid, din.x_cood,din.y_cood, din.mode)
+
 
 #Bullets array 
 obj_bullets_array=[]
@@ -144,19 +182,21 @@ def movedin():
         obj_din.set_fly_flag(1)
         obj_din.set_drop_air_time(0)
         ispos = obj_din.check_collision(obj_board.grid)
-        obj_din.din_clear(obj_board.grid)
-        if(obj_din.mode==0):
-            if obj_din.y_cood > 3 :
-                obj_din.y_cood -= 1
-            else: 
-                obj_din.y_cood=3
-        if(obj_din.mode==1):
-            if obj_din.y_cood > 5 :
-                obj_din.y_cood -= 1
-            else: 
-                obj_din.y_cood=5
-        obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
-        if ispos==2:
+        print(ispos)
+        if ispos==1:
+            obj_din.din_clear(obj_board.grid)
+            if(obj_din.mode==0):
+                if obj_din.y_cood > 3 :
+                    obj_din.y_cood -= 1
+                else: 
+                    obj_din.y_cood=3
+            if(obj_din.mode==1):
+                if obj_din.y_cood > 5 :
+                    obj_din.y_cood -= 1
+                else: 
+                    obj_din.y_cood=5
+            obj_din.din_show(obj_board.grid, obj_din.x_cood, obj_din.y_cood,obj_din.mode)
+        elif ispos==2:
             obj_din.new_din(obj_board.grid)
             obj_din.dec_lives()
             

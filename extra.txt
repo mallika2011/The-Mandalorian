@@ -74,12 +74,38 @@ BEAMS:
 
 MAGNET:
 
-xxxxxxxxxxxx
-xxxxxxxxxxxx
+  xxxxxxxx
+ xxxxxxxxxx      5x12 matrix
+xxxx    xxxx
 xxxx    xxxx
 xxxx    xxxx
 
 
+DRAGON :
+
+
+                             _///_,
+                            / ` ' '>
+                            o' __/_'>
+                          /  _/  )_\'>
+                         ' "_/   /_/\_>
+                           ____/_/_/_/
+                          /,---, _/ /
+                         ""  /_/_/_/
+                            /_(_(_(_                 \
+                           (   \_\_\\_               )\
+                            \'__\_\_\_\__            ).\
+                            //____|___\__)           )_/
+                            |  _  \'___'_(           /'
+                             \_ (-'\'___'_\      __,'_'
+                             __) \  \\___(_   __/.__,'
+                           ((,-,__\  '", __\_/. __,'
+                                       '"./_._._-'
+
+------------------------------------------------
+Thank you for visiting https://asciiart.website/
+This ASCII pic can be found at
+https://asciiart.website/index.php?art=creatures/dragons
 
 
 

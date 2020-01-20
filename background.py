@@ -10,13 +10,13 @@ class Background:
 
     #function to create the floor
     def display_floor(self,boundary):
-        for i in range(WIDTH-2):
+        for i in range(WIDTH-1):
             boundary[HT-1][i]= self.__floor
             boundary[HT-2][i]=self.__middle
 
     #function to create the ceil
     def display_ceil(self,boundary):
-        for i in range(WIDTH-2):
+        for i in range(WIDTH-1):
             boundary[0][i]=self.__ceil
             boundary[1][i]=self.__middle
 
