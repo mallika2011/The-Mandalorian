@@ -85,7 +85,7 @@ while True:
         obj_din.mode=1
 
     #POWER UP CHECK
-    if(obj_din.power_start_time!=0 and time.time()-obj_din.power_start_time >4):
+    if(obj_din.power_start_time!=0 and time.time()-obj_din.power_start_time >10):
         obj_din.power_start_time=0
         obj_din.set_power(0)
         move=1

@@ -7,8 +7,6 @@ class Din(Person):
 
     #personal attributes for din 
     def __init__(self, x_cood, y_cood):
-        # self.x_cood=x_cood
-        # self.y_cood=y_cood
         self.__body=np.array([[" ","O"," "],["{","|","}"],["/"," ","\\"]])   #3x3 matrix
         self.__body_fly=np.array([[" "," ","O"," "," "],["{","|"," ","|","}"],[" ","/"," ", "\\"," "]])
         self.__body_shield=np.array([["-","-","-","-","-","-","-"],["|"," "," ","O"," "," ","|"],["|"," ","{","|","}"," ","|"],["|"," ","/"," ","\\"," ","|"],["-","-","-","-","-","-","-"]])
