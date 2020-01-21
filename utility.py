@@ -161,7 +161,7 @@ def movedin():
         # ''' input method '''
         raise AlarmException
 
-    def user_input(timeout=0.15):
+    def user_input(timeout=0.1):
         # ''' input method '''
         signal.signal(signal.SIGALRM, alarmhandler)
         signal.setitimer(signal.ITIMER_REAL, timeout)

@@ -99,7 +99,7 @@ while True:
 
     #MOVING THE BOARD AND MANDO
     # print(factor)
-    if(time.time()-screen_time>=0.2):
+    if(time.time()-screen_time>=0.1):
         if factor >= WIDTH-SCREEN-1:
             factor = WIDTH-SCREEN-1
             move=0
