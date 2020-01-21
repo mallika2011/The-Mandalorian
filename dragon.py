@@ -1,23 +1,3 @@
-# dragon = [list("                          __,----'~~~~~~~~~`-----.__  "),
-#         list("               .  .     //====-              ____,-'~`"),
-#         list("              \_|// .   /||\\\  `~~~~`---.___./        "), 
-#         list("           _-~o  `\/    |||  \\\           _,'`        "),
-#         list("         ;_,_,/ _-'|-   |`\   \\\        ,'            "),
-#         list("           '',/~7  /-   /  ||   `\.     /             "),  
-#         list("            '  /  /-   /   ||      \   /              "),
-#         list("             /  /|- _/   ,||       \ /                "), 
-#         list("            /  `| \\'--===-'       _/`                 "),   
-#         list("          /|    )-'\~'      _,--''                    "),
-#         list("         / |    |   `\_   ,^             /\           "),
-#         list("        /  \     \__   \/~               `\__         "),
-#         list("    _,-' _/'\ ,-'~____-'`-/                 ``===\    "),
-#         list("   ((->/'    \|||' `.     `\.  ,                _||   "),
-#         list("              \_     `\      `~---|__i__i__\--~'_/    "),
-#         list("             __-^-_    `)  \-.______________,-~'      "),
-#         list("            ///,-'~`__--^-  |-------~~~~^'            "),
-#         list("                   ///,--~`-\                         ")]
-
-
 
 dragon=[list("        _(9(9)__        __/^\/^\__            "),
         list("       /o o   \/_     __\_\_/\_/_/_           "),
@@ -64,9 +44,20 @@ class Dragon(Person):
     def set_shootstart(self,x):
         self.__shootstart=x
 
+    def dragon_clear(self, grid):
+        # x=WIDTH-len(dragon[0])-1
+        # y=HT-2-len(dragon)-1
+        x=self.getx()
+        y=self.gety()
+        for i in range(y,y+len(dragon)):
+            for j in range(x,x+len(dragon[0])):
+                grid[i][j]=" "
+
     def dragon_show(self,grid):
-        x=WIDTH-len(dragon[0])-1
-        y=HT-2-len(dragon)-1
+        # x=WIDTH-len(dragon[0])-1
+        # y=HT-2-len(dragon)-1
+        x=self.getx()
+        y=self.gety()
         for i in range(y,y+len(dragon)):
             for j in range(x,x+len(dragon[0])):
                 grid[i][j]=dragon[i-y][j-x]
@@ -82,6 +73,20 @@ class Dragon(Person):
         self.clear_iceball(grid)
         self.set_icex(self.get_icex()-1)
         self.show_iceball(grid)
+    
+    def move_dragon(self, grid, y):
+        # print("entered with mando and drago ", y, self.gety())  
+        self.dragon_clear(grid)
+        new_y=y-5
+
+        if(new_y<3):
+            new_y=3
+        elif(new_y>28):
+            new_y=28
+        
+        self.sety(new_y)
+        self.dragon_show(grid)
+        
 
 
 

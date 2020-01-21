@@ -28,7 +28,7 @@ obj_back.display_floor(obj_board.grid)
 
 #The magnet
 obj_magnet=Magnet(5,random.randrange(30,WIDTH-200))
-obj_magnet.place_magnet(obj_board.grid)
+obj_magnet.show(obj_board.grid,obj_magnet.shape, obj_magnet.getx(), obj_magnet.gety())
 
 #PRINTING HEADERS
 def print_header(newtime):
@@ -74,16 +74,15 @@ def coins_on_board():
         valy = random.randrange(0, WIDTH-100)
         obj_coin = Coins(valx, valy)
         if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+1] == ' '):
-            obj_coin.place_coin(obj_board.grid)
-
+            obj_coin.show(obj_board.grid, obj_coin.shape,obj_coin.getx(), obj_coin.gety())
 
 obj_powerup_array=[]
 #Placing Powerups 
-def power_on_board():
+def create_power():
     count = 0
     while(count<5):
         valx = random.randrange(5, HT-10)
-        valy = random.randrange(0, WIDTH-100)
+        valy = random.randrange(0, WIDTH-150)
 
         for i in range(valx-1, valx+2+1):
             for j in range(valy-1, valy+3+1):
@@ -94,13 +93,13 @@ def power_on_board():
         obj_powerup_array.append(obj_power)
         count+=1
 
-def power_place():
+def power_on_board():
     for i in range(5):
-        obj_powerup_array[i].place_power(obj_board.grid)
+        obj_powerup_array[i].show(obj_board.grid,obj_powerup_array[i].shape,obj_powerup_array[i].getx(),obj_powerup_array[i].gety())
+
 
 
 def no_beam(x,y,grid):
-    # print("popopop:",x, y)
     for i in range(len(obj_beam_array)):
         xco=obj_beam_array[i].getx()
         yco=obj_beam_array[i].gety()
@@ -113,7 +112,7 @@ def no_beam(x,y,grid):
 
 def check_magnet(din, grid):
     din.din_clear(grid)
-    if(obj_magnet.gety()-din.getx() < 30 and obj_magnet.gety()>din.getx()): #As close as 10 units
+    if(obj_magnet.gety()-din.getx() < 20 and obj_magnet.gety()>din.getx()): #As close as 20 units
         # print("in")
         if(din.gety()>5):
             din.sety(din.gety()-1)
@@ -122,7 +121,7 @@ def check_magnet(din, grid):
         din.setx(din.getx()+2)
         din.set_magnet_flag(1)
 
-    elif(din.getx()-obj_magnet.gety()<30 and din.getx() >= obj_magnet.gety()):
+    elif(din.getx()-obj_magnet.gety()<20 and din.getx() >= obj_magnet.gety()):
         # print("in2")
         if(din.gety()>5):
             din.sety(din.gety()-1)
@@ -138,6 +137,8 @@ def check_magnet(din, grid):
 
 #Bullets array 
 obj_bullets_array=[]
+
+#Dragons bullets
 
 
 def movedin():
@@ -226,7 +227,7 @@ def movedin():
     elif char == 'l':
         obj_din.set_fly_flag(0)
         new_bullet=Bullet(obj_din.gety()+1, obj_din.getx()+5)
-        new_bullet.place_bullet(obj_board.grid)
+        new_bullet.show(obj_board.grid,new_bullet.shape,new_bullet.getx(), new_bullet.gety())
         new_bullet.start=time.time()
         new_bullet.active=1
         obj_bullets_array.append(new_bullet)

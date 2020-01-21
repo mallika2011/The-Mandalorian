@@ -9,13 +9,13 @@ move=1
 
 os.system('clear')
 beams_on_board()
-# obj_magnet.place_magnet(obj_board.grid)
 coins_on_board()
+create_power()
 power_on_board()
-power_place()
 
 
 while True:
+
     newtime = GAMETIME - (round(time.time()) - round(start_time))
     reposition_cursor(0, 0)
     if(newtime == 0 or obj_din.show_lives() <= 0):
@@ -28,7 +28,7 @@ while True:
         print()
         print("BETTER LUCK NEXT TIME!")
         print()
-        print("YOUR SCORE IS : ", obj_din.show_coins())
+        print("YOUR SCORE IS : ", obj_din.show_coins()*10)
         quit()
 
     #BOUNDARY CONDITIONS FOR DIN:
@@ -45,7 +45,7 @@ while True:
             print("DON'T LET THE MAGNET DEFEAT YOU!")
             print()
             print("BETTER LUCK NEXT TIME!")
-            print("YOUR SCORE IS : ", obj_din.show_coins())
+            print("YOUR SCORE IS : ", obj_din.show_coins()*10)
             quit()
 
     #GRAVITY EFFECT
@@ -95,15 +95,19 @@ while True:
 
 
     #MOVING THE BOARD AND MANDO
-    if(time.time()-screen_time>=0.4):
+    if(time.time()-screen_time>=0.2):
         if factor >= WIDTH-SCREEN-1:
             factor = WIDTH-SCREEN-1
             move=0
+            obj_dragon.move_dragon(obj_board.grid,obj_din.gety())
         elif(obj_din.show_power()==0):
             factor += 1
         elif(obj_din.show_power()==1):
             factor+=4
-            move=4
+            if(factor >= WIDTH-SCREEN-1):
+                move=1
+            else:
+                move=4
         screen_time=time.time()
         obj_din.din_clear(obj_board.grid)
         obj_din.din_show(obj_board.grid,move+obj_din.getx(), obj_din.gety(),obj_din.show_mode())
@@ -112,6 +116,6 @@ while True:
     beams_on_board()
     obj_board.print_board(factor)
     movedin()
-    obj_magnet.place_magnet(obj_board.grid)
-    power_place()
+    obj_magnet.show(obj_board.grid,obj_magnet.shape,obj_magnet.getx(), obj_magnet.gety())
+    power_on_board()
     

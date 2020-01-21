@@ -5,7 +5,7 @@ class Objects:
     def __init__(self, x, y):
         self._x = x
         self._y = y
-        self.shape=np.zeros((100), dtype='<U1000')
+        # self.shape=np.zeros((100), dtype='<U1000')
 
     def setx(self, x):
         self._x=x
@@ -16,7 +16,11 @@ class Objects:
     def gety(self):
         return self._y
 
-    # def show(self,shape)
+    def show(self,grid,shape,x,y):                  
+        #POLYMORPHISM USED TO SHOW/DISPLAY ALL OBJECTS
+        for i in range(x,x+len(shape)):
+            for j in range(y,y+len(shape[0])):
+                grid[i][j]=shape[i-x][j-y]
 
 
 
@@ -25,7 +29,7 @@ class Beam(Objects):
 
     def __init__(self, x, y):
         # self.shape = np.zeros((20), dtype='<U100')
-        self.shape=[]*20
+        self.shape=[0]*20
         self.canplace=0
         self.active=0
         self.angle=0
@@ -128,16 +132,12 @@ class Beam(Objects):
 #CLASS FOR THE COINS 
 class Coins (Objects):
     def __init__(self,x,y):
-        self.shape=np.zeros((1),dtype='<U100')
+        self.shape=[[COIN]]
         Objects.__init__(self,x,y)
-    
-    def place_coin(self, grid):
-        self.shape.fill(COIN)
-        grid[self.getx()][self.gety()]=COIN
 
 class Bullet(Objects):
     def __init__(self,x,y):
-        self.shape=np.zeros((3),dtype='<U100')
+        self.shape=[["(","0",")"]]
         self.start=0
         self.active=0
         self.__crash=0
@@ -155,15 +155,7 @@ class Bullet(Objects):
 
         for i in range(y-2,y+3):
             grid[x][i]=' '
-
-    def place_bullet(self, grid):
-        self.shape[0]='('
-        self.shape[1]='0'
-        self.shape[2]=')'
-
-        for i in range(3):
-            grid[self.getx()][self.gety()+i]=self.shape[i]
-        
+       
     def shoot(self, grid):
         self.clear_bullet(grid)
 
@@ -178,7 +170,7 @@ class Bullet(Objects):
                         self.sety(i)
                         self.set_crash(1)
                 self.sety(self.gety()+5)
-            self.place_bullet(grid)
+            self.show(grid, self.shape,self.getx(),self.gety())
             self.active=1
 
 
@@ -191,34 +183,11 @@ class Bullet(Objects):
 
 class Powerup(Objects):
     def __init__(self,x,y):
+        self.shape=[[PLUS,PLUS,PLUS],[PLUS,PLUS,PLUS]]
         Objects.__init__(self,x,y)
-
-    def place_power(self,grid):
-        for i in range (self.getx(), self.getx()+2):
-            for j in range(self.gety(), self.gety()+3):
-                grid[i][j]=PLUS
 
 
 class Magnet(Objects):
     def __init__(self, x,y):
+        self.shape=[[" "," ",MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET," "," "],[" ",MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET," "],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET]]
         Objects.__init__(self,x,y)
-
-    def place_magnet(self, grid):
-        for i in range(self.getx(),self.getx()+5):
-            for j in range(self.gety(),self.gety()+12):
-                if(i-self.getx()>1):
-                    if(j-self.gety()<4 or j-self.gety() >=8):
-                        grid[i][j]=MAGNET
-                    else :
-                        grid[i][j]=" "
-                elif (i-self.getx()<=1 and (j-self.gety()==0 or j-self.gety()==11)):
-                    grid[i][j]=" "
-                elif(i-self.getx()==0 and (j-self.gety()==1 or j-self.gety()==10)):
-                    grid[i][j]=" "
-                else:
-                    grid[i][j]=MAGNET
-
-
-
-
-
