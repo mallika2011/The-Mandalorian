@@ -24,11 +24,9 @@ while True:
 
         print()
         if(obj_din.show_lives() <= 0):
-            print("LIVES FINISHED :(")
-        print()
-        print("BETTER LUCK NEXT TIME!")
-        print()
-        print("YOUR SCORE IS : ", obj_din.show_coins()*10)
+            print(Fore.BLACK+Back.LIGHTGREEN_EX+"LIVES OVER :(".center(SCREEN)+Style.RESET_ALL)
+        print(Back.MAGENTA+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
+        print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
         quit()
 
     #BOUNDARY CONDITIONS FOR DIN:
@@ -42,10 +40,10 @@ while True:
             os.system('clear')
             game_over()
             print()
-            print("DON'T LET THE MAGNET DEFEAT YOU!")
-            print()
-            print("BETTER LUCK NEXT TIME!")
-            print("YOUR SCORE IS : ", obj_din.show_coins()*10)
+            print(Fore.BLACK+Back.LIGHTBLUE_EX+"DON'T LET THE MAGNET DEFEAT YOU!".center(SCREEN)+Style.RESET_ALL)
+            print(Back.MAGENTA+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
+            print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
+        
             quit()
 
     #GRAVITY EFFECT
@@ -112,8 +110,8 @@ while True:
             elif(obj_dragon.get_lives()<=0):
                 os.system('clear')
                 game_over()
-                print("YOU WERE DEFEATED BY THE DRAGON!")
-                print("YOUR SCORE IS : ", obj_din.show_coins()*10)
+                print(Fore.BLACK+Back.LIGHTYELLOW_EX+"YOU WON!".center(SCREEN)+Style.RESET_ALL)
+                print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
                 quit()
             move_iceballs()           
 
@@ -122,7 +120,7 @@ while True:
         elif(obj_din.show_power()==1):
             factor+=4
             if(factor >= WIDTH-SCREEN-1):
-                move=1
+                move=0
             else:
                 move=4
         screen_time=time.time()

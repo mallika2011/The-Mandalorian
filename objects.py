@@ -182,7 +182,8 @@ class Bullet(Objects):
                 self.set_crash(1)
                 return 1
             elif(task==2 and self.gety()>=dragon.getx() and dragon.gety()<=self.getx()<=dragon.gety()+9):
-                print("entered")
+                if(factor<WIDTH-SCREEN-1):
+                    self.clear_bullet(grid)
                 dragon.dec_lives()
                 self.active=0
                 return 2

@@ -19,6 +19,7 @@ GRAVITYVAL=1
 BEAM_SIZE=20
 INPUT_CHAR=''
 FIGHT_START=0
+factor = 0
 
 def line():
     for i in range(SCREEN):
@@ -58,14 +59,16 @@ def view_colours():
 
 def game_over():
 
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ")                 
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "  _____                         ____                 ")                 
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ " / ____|                       / __ \                ")              
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "| |  __  __ _ _ __ ___   ___  | |  | |_   _____ _ __ ")
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +"| | |_ |/ _` | '_ ` _ \ / _ \ | |  | \ \ / / _ \ '__|")
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +"| |__| | (_| | | | | | |  __/ | |__| |\ V /  __/ |   ")
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +" \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|   ")
-    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     "+Style.RESET_ALL)                 
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN))                 
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "  _____                         ____                 ".center(SCREEN))                 
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ " / ____|                       / __ \                ".center(SCREEN))              
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "| |  __  __ _ _ __ ___   ___  | |  | |_   _____ _ __ ".center(SCREEN))
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +"| | |_ |/ _` | '_ ` _ \ / _ \ | |  | \ \ / / _ \ '__|".center(SCREEN))
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +"| |__| | (_| | | | | | |  __/ | |__| |\ V /  __/ |   ".center(SCREEN))
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT +" \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|   ".center(SCREEN))
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
+    print(Fore.WHITE + Back.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
                                                       
                                                       
 

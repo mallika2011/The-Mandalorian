@@ -10,7 +10,7 @@ from dragon import *
 # The board
 obj_board = Board(HT, WIDTH)
 obj_board.create_board()
-factor = 0
+
 
 # The player
 obj_din = Din(STARTPOS, 35)
