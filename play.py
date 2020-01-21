@@ -65,10 +65,13 @@ while True:
     for i in range (len(obj_bullets_array)):
         if(obj_bullets_array[i].active==0):
             continue
-        if(obj_bullets_array[i].check_collision(obj_board.grid)==1 or obj_bullets_array[i].show_crash()==1): #If collision
+        if(obj_bullets_array[i].check_collision(obj_board.grid,obj_dragon,1)==1 or obj_bullets_array[i].show_crash()==1): #If collision with beams
             obj_bullets_array[i].active=0
             no_beam(obj_bullets_array[i].getx(), obj_bullets_array[i].gety(),obj_board.grid)
             obj_bullets_array[i].clear_bullet(obj_board.grid)
+        elif(obj_bullets_array[i].check_collision(obj_board.grid, obj_dragon,2)==2):
+            o=1
+        
         else:
             obj_bullets_array[i].shoot(obj_board.grid)
         
@@ -88,18 +91,32 @@ while True:
         obj_din.set_mode(1)
 
     #POWER UP CHECK
-    if(obj_din.show_pstart_time()!=0 and time.time()-obj_din.show_pstart_time()>10):
+    if(obj_din.show_pstart_time()!=0 and time.time()-obj_din.show_pstart_time()>5):
         obj_din.set_pstart_time(0)
         obj_din.set_power(0)
         move=1
 
 
     #MOVING THE BOARD AND MANDO
+    # print(factor)
     if(time.time()-screen_time>=0.2):
         if factor >= WIDTH-SCREEN-1:
             factor = WIDTH-SCREEN-1
             move=0
+            #DRAGON MANDO FIGHT BEGINS!!!!
             obj_dragon.move_dragon(obj_board.grid,obj_din.gety())
+            
+            if(time.time()-obj_dragon.get_shootstart()>=1):
+                obj_dragon.set_shootstart(time.time())
+                create_shoot_iceballs(obj_board.grid)
+            elif(obj_dragon.get_lives()<=0):
+                os.system('clear')
+                game_over()
+                print("YOU WERE DEFEATED BY THE DRAGON!")
+                print("YOUR SCORE IS : ", obj_din.show_coins()*10)
+                quit()
+            move_iceballs()           
+
         elif(obj_din.show_power()==0):
             factor += 1
         elif(obj_din.show_power()==1):

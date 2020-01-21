@@ -168,6 +168,9 @@ class Din(Person):
                 if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3 and self.show_shield_flag()==0):
                     return 2 #not possible
                     #TODO dead sound
+                elif(grid[i][j]==ICE1 or grid[i][j]==ICE2 or grid[i][j]==ICE3 and self.show_shield_flag()==0):
+                    self.dec_lives()
+                    return 3 #Not possible
                 elif(grid[i][j]==COIN):
                     self.inc_coins()
                     grid[i][j]=" "

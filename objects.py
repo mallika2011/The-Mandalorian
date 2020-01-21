@@ -170,15 +170,22 @@ class Bullet(Objects):
                         self.sety(i)
                         self.set_crash(1)
                 self.sety(self.gety()+5)
+            
+            
             self.show(grid, self.shape,self.getx(),self.gety())
             self.active=1
 
 
-    def check_collision(self, grid):
+    def check_collision(self, grid,dragon,task):
         for i in range(3):
-            if(grid[self.getx()][self.gety()+i]==BEAM1 or grid[self.getx()][self.gety()+i]==BEAM2 or grid[self.getx()][self.gety()+i]==BEAM3 ):
+            if(task==1 and grid[self.getx()][self.gety()+i]==BEAM1 or grid[self.getx()][self.gety()+i]==BEAM2 or grid[self.getx()][self.gety()+i]==BEAM3 ):
                 self.set_crash(1)
                 return 1
+            elif(task==2 and self.gety()>=dragon.getx() and dragon.gety()<=self.getx()<=dragon.gety()+9):
+                print("entered")
+                dragon.dec_lives()
+                self.active=0
+                return 2
         return 0
 
 class Powerup(Objects):
@@ -191,3 +198,42 @@ class Magnet(Objects):
     def __init__(self, x,y):
         self.shape=[[" "," ",MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET," "," "],[" ",MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET,MAGNET," "],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET],[MAGNET,MAGNET,MAGNET,MAGNET," "," "," "," ",MAGNET,MAGNET,MAGNET,MAGNET]]
         Objects.__init__(self,x,y)
+
+
+class Iceballs(Objects):
+    def __init__(self,x,y):
+        self.shape=[[ICE1,ICE2,ICE3]]
+        self.__active=0
+        Objects.__init__(self,x,y)
+
+    def set_active(self,x):
+        self.__active=x
+    def get_active(self):
+        return self.__active
+
+    def clear_iceball(self,grid):
+        x=self.getx()
+        y=self.gety()
+        for i in range(x,x+5):
+            for j in range(y,y+5):
+                grid[i][j]=" "
+
+    def shoot(self, grid):
+        self.clear_iceball(grid)
+        if(self.gety()-5 < WIDTH-SCREEN-1):
+            self.set_active(0)
+        else:
+            if(self.get_active()==0):
+                self.sety(self.gety()-1)
+            else:
+                self.sety(self.gety()-5)                    
+            self.show(grid, self.shape,self.getx(),self.gety())
+            self.set_active(1)
+           
+    
+    def check_collision(self, grid,din):
+        x=self.getx()
+        y=self.gety()
+        for i in range(x-7,x+4):
+            if(grid[i][y]=="O" or grid[i][y]=='{'or grid[i][y]=='}'or grid[i][y]=="|" or grid[i][y]=='\\' or grid[i][y]=='/'):
+                return 1

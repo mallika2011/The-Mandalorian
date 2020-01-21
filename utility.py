@@ -35,7 +35,7 @@ def print_header(newtime):
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
     print(Fore.WHITE + Back.LIGHTBLUE_EX + Style.BRIGHT + "THE MANDALORIAN".center(SCREEN)+Style.RESET_ALL)
     print(Fore.WHITE + Back.LIGHTBLUE_EX+ Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
-    stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins()*10)+"  |  TIME: " + str(newtime))
+    stats = str("LIVES: "+str(obj_din.show_lives()) + "  |  SCORE:" + str(obj_din.show_coins()*10)+"  |  TIME: " + str(newtime) +"  |  ENEMY: "+str(obj_dragon.get_lives()))
     print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + stats.center(SCREEN))
     print(Fore.WHITE + Back.LIGHTRED_EX + Style.BRIGHT + "               ".center(SCREEN)+Style.RESET_ALL)
 
@@ -138,7 +138,21 @@ def check_magnet(din, grid):
 #Bullets array 
 obj_bullets_array=[]
 
-#Dragons bullets
+obj_iceballs_array=[]
+#Dragons iceballs
+def create_shoot_iceballs(grid):
+    new_iceball=Iceballs(obj_dragon.gety(), obj_dragon.getx())
+    new_iceball.shoot(grid)
+    obj_iceballs_array.append(new_iceball)
+
+def move_iceballs():
+    for i in range(len(obj_iceballs_array)):
+        if(obj_iceballs_array[i].get_active()==0):
+            continue
+        else:
+            if(obj_iceballs_array[i].check_collision(obj_board.grid,obj_din)==1):
+                obj_iceballs_array[i].set_active(0)
+            obj_iceballs_array[i].shoot(obj_board.grid)        
 
 
 def movedin():
@@ -235,7 +249,10 @@ def movedin():
     else:
         obj_din.set_fly_flag(0)
         obj_din.set_drop_air_time(obj_din.show_drop_air_time()+1)
-        
+        ispos = obj_din.check_collision(obj_board.grid)
+
+        if(ispos==2):
+            obj_din.dec_lives()
 
 
 
