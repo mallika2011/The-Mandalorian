@@ -166,17 +166,20 @@ class Din(Person):
         for i in range (y,y+3):
             for j in range (x, x+3):
                 if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3 and self.show_shield_flag()==0):
+                    os.system('aplay -q ./sounds/lose_life.wav&')
                     return 2 #not possible
                     #TODO dead sound
                 elif(grid[i][j]==ICE1 or grid[i][j]==ICE2 or grid[i][j]==ICE3 and self.show_shield_flag()==0):
+                    os.system('aplay -q ./sounds/lose_life.wav&')
                     self.dec_lives()
                     return 3 #Not possible
                 elif(grid[i][j]==COIN):
-                    # os.system('aplay ./sounds/coin.wav&')
+                    os.system('aplay -q ./sounds/coin.wav&')
                     self.inc_coins()
                     grid[i][j]=" "
 
                 elif(grid[i][j]==PLUS):
+                    os.system('aplay -q ./sounds/power_up.wav&')
                     self.set_pstart_time(time.time())
                     self.set_power(1)                    
         return 1

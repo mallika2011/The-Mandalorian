@@ -110,6 +110,7 @@ while True:
             elif(obj_dragon.get_lives()<=0):
                 os.system('clear')
                 game_over()
+                os.system('aplay -q ./sounds/win.wav&')
                 print(Fore.LIGHTGREEN_EX+Style.BRIGHT+"YOU WON!".center(SCREEN)+Style.RESET_ALL)
                 print(Fore.MAGENTA+Style.BRIGHT+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL+Fore.MAGENTA+Style.BRIGHT+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
                 quit()
