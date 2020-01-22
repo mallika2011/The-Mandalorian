@@ -172,6 +172,7 @@ class Din(Person):
                     self.dec_lives()
                     return 3 #Not possible
                 elif(grid[i][j]==COIN):
+                    # os.system('aplay ./sounds/coin.wav&')
                     self.inc_coins()
                     grid[i][j]=" "
 
