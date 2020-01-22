@@ -20,15 +20,17 @@ python3 play.py
 
 ## Rules
 
-A - To move left
+**a** - To move left
 
-W - To move up
+**w** - To move up
 
-D - To move right
+**d** - To move right
 
-L - To shoot
+**l** - To shoot
 
-Spacebar- To activate shield
+**q** - To quit
+
+**Spacebar**- To activate shield
 
 ## Features
 
