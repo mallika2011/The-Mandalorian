@@ -101,6 +101,7 @@ while True:
         if factor >= WIDTH-SCREEN-1:
             factor = WIDTH-SCREEN-1
             move=0
+            obj_dragon.set_cankill(1)
             #DRAGON MANDO FIGHT BEGINS!!!!
             obj_dragon.move_dragon(obj_board.grid,obj_din.gety())
             

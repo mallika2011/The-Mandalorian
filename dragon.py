@@ -20,11 +20,16 @@ class Dragon(Person):
         Person.__init__(self,x,y)
         self.__lives=5
         self.__shootstart=0
+        self.__cankill=0
 
     def set_lives(self,x):
         self.__lives=x
     def get_lives(self):
         return self.__lives
+    def set_cankill(self,x):
+        self.__cankill=x
+    def get_cankill(self):
+        return self.__cankill
     def dec_lives(self):
         self.__lives-=1
 
