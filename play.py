@@ -122,6 +122,7 @@ while True:
             factor+=4
             if(factor >= WIDTH-SCREEN-1):
                 move=0
+                factor=WIDTH-SCREEN-1
             else:
                 move=4
         screen_time=time.time()

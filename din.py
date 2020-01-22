@@ -18,6 +18,7 @@ class Din(Person):
         self.__powerflag=0
         self.__mode=0
         self.__shield_start_time=0
+        self.__last_shield_time=0
         self.__power_start_time=0
         self.__drop_air_time=0
         self.__magnet_flag=0
@@ -30,6 +31,12 @@ class Din(Person):
     
     def show_shield_flag(self):
         return self.__shield_flag
+
+    def set_last_shield_time(self,x):
+        self.__last_shield_time=x
+
+    def get_last_shield_time(self):
+        return self.__last_shield_time
 
     def set_mode(self,x):
         self.__mode=x
@@ -157,7 +164,8 @@ class Din(Person):
             for j in range(x,x+3):
                 grid[i][j]=self.__body[i-y][j-x]
 
-        self.set_shield_flag(0)        
+        self.set_shield_flag(0)  
+        self.set_last_shield_time(time.time())      
 
 
     def check_collision(self,grid):
@@ -165,11 +173,11 @@ class Din(Person):
         y=self.gety()
         for i in range (y,y+3):
             for j in range (x, x+3):
-                if(grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3 and self.show_shield_flag()==0):
+                if((grid[i][j]==BEAM1 or grid[i][j]==BEAM2 or grid[i][j]==BEAM3) and self.show_shield_flag()==0):
                     os.system('aplay -q ./sounds/lose_life.wav&')
                     return 2 #not possible
                     #TODO dead sound
-                elif(grid[i][j]==ICE1 or grid[i][j]==ICE2 or grid[i][j]==ICE3 and self.show_shield_flag()==0):
+                elif((grid[i][j]==ICE1 or grid[i][j]==ICE2 or grid[i][j]==ICE3) and self.show_shield_flag()==0):
                     os.system('aplay -q ./sounds/lose_life.wav&')
                     self.dec_lives()
                     return 3 #Not possible

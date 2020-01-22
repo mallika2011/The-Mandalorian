@@ -237,7 +237,7 @@ def movedin():
 
 
     elif char == ' ':
-        if(obj_din.show_shield_flag()==0 and obj_din.show_fly_flag()==0):  #Activate shield only when on ground
+        if(obj_din.show_shield_flag()==0  and time.time()-obj_din.get_last_shield_time() > 10):  #Activate shield only after 10s of last shielf
             obj_din.din_clear(obj_board.grid)
             obj_din.add_shield(obj_board.grid)
             obj_din.set_shield_flag(1)
