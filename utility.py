@@ -247,6 +247,7 @@ def movedin():
 
 
     elif char == 'l':
+        os.system('aplay -q ./sounds/shoot2.wav&')
         obj_din.set_fly_flag(0)
         new_bullet=Bullet(obj_din.gety()+1, obj_din.getx()+5)
         new_bullet.show(obj_board.grid,new_bullet.shape,new_bullet.getx(), new_bullet.gety())

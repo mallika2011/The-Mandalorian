@@ -73,7 +73,7 @@ def view_colours():
 
 
 def game_over():
-
+    os.system('aplay -q ./sounds/game_over.wav&')
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN))                 
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "  _____                         ____                 ".center(SCREEN))                 
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ " / ____|                       / __ \                ".center(SCREEN))              
