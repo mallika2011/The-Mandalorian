@@ -24,9 +24,9 @@ while True:
 
         print()
         if(obj_din.show_lives() <= 0):
-            print(Fore.BLACK+Back.LIGHTGREEN_EX+"LIVES OVER :(".center(SCREEN)+Style.RESET_ALL)
-        print(Back.MAGENTA+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
-        print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
+            print(Fore.LIGHTRED_EX+Style.BRIGHT+"LIVES OVER :(".center(SCREEN)+Style.RESET_ALL)
+        print(Fore.MAGENTA+Style.BRIGHT+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
+        print(Fore.MAGENTA+Style.BRIGHT+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Fore.MAGENTA+Style.BRIGHT+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
         quit()
 
     #BOUNDARY CONDITIONS FOR DIN:
@@ -40,9 +40,9 @@ while True:
             os.system('clear')
             game_over()
             print()
-            print(Fore.BLACK+Back.LIGHTBLUE_EX+"DON'T LET THE MAGNET DEFEAT YOU!".center(SCREEN)+Style.RESET_ALL)
-            print(Back.MAGENTA+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
-            print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
+            print(Fore.LIGHTBLUE_EX+Style.BRIGHT+"DON'T LET THE MAGNET DEFEAT YOU!".center(SCREEN)+Style.RESET_ALL)
+            print(Fore.MAGENTA+Style.BRIGHT+"BETTER LUCK NEXT TIME!".center(SCREEN)+Style.RESET_ALL)
+            print(Fore.MAGENTA+Style.BRIGHT+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Fore.MAGENTA+Style.BRIGHT+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
         
             quit()
 
@@ -110,8 +110,8 @@ while True:
             elif(obj_dragon.get_lives()<=0):
                 os.system('clear')
                 game_over()
-                print(Fore.BLACK+Back.LIGHTYELLOW_EX+"YOU WON!".center(SCREEN)+Style.RESET_ALL)
-                print(Back.MAGENTA+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL, Back.MAGENTA+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
+                print(Fore.LIGHTGREEN_EX+Style.BRIGHT+"YOU WON!".center(SCREEN)+Style.RESET_ALL)
+                print(Fore.MAGENTA+Style.BRIGHT+"YOUR SCORE IS : ".center(SCREEN)+Style.RESET_ALL+Fore.MAGENTA+Style.BRIGHT+str(obj_din.show_coins()*10).center(SCREEN)+Style.RESET_ALL)
                 quit()
             move_iceballs()           
 

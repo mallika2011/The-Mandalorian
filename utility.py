@@ -203,8 +203,12 @@ def movedin():
             obj_din.dec_lives()
 
     elif char == 'q':
-    	os.system("killall afplay")
-    	quit()
+        # game_over()
+    	# os.system("killall afplay")
+        os.system('tput reset')
+        game_over()
+        print(Fore.LIGHTBLUE_EX+Style.BRIGHT+"Don't Quit!".center(SCREEN)+Style.RESET_ALL)
+        quit()
 
     elif char == 'w':
         obj_din.set_fly_flag(1)
@@ -252,6 +256,7 @@ def movedin():
         ispos = obj_din.check_collision(obj_board.grid)
 
         if(ispos==2):
+            obj_din.new_din(obj_board.grid)
             obj_din.dec_lives()
 
 
