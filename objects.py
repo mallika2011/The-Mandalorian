@@ -160,7 +160,10 @@ class Bullet(Objects):
         y=self.gety()
 
         for i in range(y-2,y+3):
-            grid[x][i]=' '
+            if(grid[x][i]==COIN):
+                grid[x][i]=COIN
+            else:
+                grid[x][i]=' '
        
     def shoot(self, grid):
         self.clear_bullet(grid)
@@ -169,7 +172,7 @@ class Bullet(Objects):
             self.active =0
         else:
             if(self.active==0):
-                self.sety(self.gety()+1)
+                self.sety(self.gety()+1)                    
             else:
                 for i in range(self.gety()-10, self.gety()+10):
                     if(grid[self.getx()][i]==BEAM1 or grid[self.getx()][i]==BEAM2  or grid[self.getx()][i]==BEAM3):
