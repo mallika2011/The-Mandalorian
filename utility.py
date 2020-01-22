@@ -144,7 +144,8 @@ obj_bullets_array=[]
 obj_iceballs_array=[]
 #Dragons iceballs
 def create_shoot_iceballs(grid):
-    new_iceball=Iceballs(obj_dragon.gety(), obj_dragon.getx())
+    # new_iceball=Iceballs(obj_dragon.gety()+7, obj_dragon.getx())
+    new_iceball=Iceballs(obj_din.gety(), obj_dragon.getx())
     new_iceball.shoot(grid)
     obj_iceballs_array.append(new_iceball)
 

@@ -224,7 +224,7 @@ class Iceballs(Objects):
     def clear_iceball(self,grid):
         x=self.getx()
         y=self.gety()
-        for i in range(x,x+5):
+        for i in range(x,x+2):
             for j in range(y,y+5):
                 grid[i][j]=" "
 

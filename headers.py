@@ -83,7 +83,20 @@ def game_over():
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT +" \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|   ".center(SCREEN))
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
     print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
-    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)                 
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                                     ".center(SCREEN)+Style.RESET_ALL)      
+
+def yay():
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ " __     __                             _ ".center(SCREEN))
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ " \ \   / /                            | |".center(SCREEN))
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "  \ \_/ /_ _  __ _  __ _  __ _ _   _  | |".center(SCREEN))
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "   \   / _` |/ _` |/ _` |/ _` | | | | | |".center(SCREEN))
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "    | | (_| | (_| | (_| | (_| | |_| | |_|".center(SCREEN))
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "    |_|\__,_|\__,_|\__,_|\__,_|\__, | (_)".center(SCREEN)+Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                __/ |    ".center(SCREEN)+Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                               |___/     ".center(SCREEN)+Style.RESET_ALL)
+    print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT+ "                                         ".center(SCREEN)+Style.RESET_ALL)      
+
+           
                                                       
                                                       
 
