@@ -133,7 +133,13 @@ class Beam(Objects):
 class Coins (Objects):
     def __init__(self,x,y):
         self.shape=[[COIN]]
+        self.__vis=0
         Objects.__init__(self,x,y)
+
+    def get_vis(self):
+        return self.__vis
+    def set_vis(self,x):
+        self.__vis=x
 
 class Bullet(Objects):
     def __init__(self,x,y):

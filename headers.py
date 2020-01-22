@@ -12,7 +12,7 @@ from getch import _getChUnix as getChar
 
 HT=40
 SCREEN=200
-WIDTH=350
+WIDTH=500
 GAMETIME=100
 STARTPOS=25
 GRAVITYVAL=1
@@ -20,7 +20,7 @@ BEAM_SIZE=20
 INPUT_CHAR=''
 FIGHT_START=0
 factor = 0
-
+NUMCOINS=100
 def line():
     for i in range(SCREEN):
         print('-', end='')

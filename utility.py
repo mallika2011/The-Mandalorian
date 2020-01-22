@@ -68,11 +68,14 @@ def beams_on_board():
 
 
 # Placing coins
+obj_coins_array=[]
 def coins_on_board():
-    for i in range(50):
+    for i in range(NUMCOINS):
         valx = random.randrange(5, HT-10)
         valy = random.randrange(0, WIDTH-100)
         obj_coin = Coins(valx, valy)
+        obj_coin.set_vis(1)
+        obj_coins_array.append(obj_coin)
         if(obj_board.grid[valx][valy] == ' 'and obj_board.grid[valx][valy-1] == ' ' and obj_board.grid[valx][valy+1] == ' '):
             obj_coin.show(obj_board.grid, obj_coin.shape,obj_coin.getx(), obj_coin.gety())
 
