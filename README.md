@@ -1,5 +1,7 @@
 # The-Mandalorian
 
+This game is a terminal version of Jetpack Joyride. Dodge obstacles, collect coins, and fight the fierce dragon to win the game! 
+
 ## Setup
 
 Libraries used :
